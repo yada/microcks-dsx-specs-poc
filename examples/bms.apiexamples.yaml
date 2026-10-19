@@ -1,0 +1,13 @@
+apiVersion: mocks.microcks.io/v1alpha1
+kind: APIExamples
+metadata:
+  name: BMS Event Bus
+  version: 1.0.0
+operations:
+  'RECEIVE receiveRackValue':
+    rack-point-value:
+      eventMessage:
+        payload:
+          value: 22.96215
+          timestamp: 1743620423000
+          quality: 1

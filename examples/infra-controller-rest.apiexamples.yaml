@@ -1,0 +1,17 @@
+apiVersion: mocks.microcks.io/v1alpha1
+kind: APIExamples
+metadata:
+  name: NVIDIA Infra Controller REST API
+  version: 2.0.0
+operations:
+  'GET /v2/org/{org}/nico/metadata':
+    poc-metadata:
+      request:
+        parameters:
+          org: test-org-1
+      response:
+        status: '200'
+        mediaType: application/json
+        body:
+          version: 0.1.24
+          buildTime: '2019-08-24T14:15:22Z'

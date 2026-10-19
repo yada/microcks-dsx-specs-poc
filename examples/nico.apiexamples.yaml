@@ -1,0 +1,14 @@
+apiVersion: mocks.microcks.io/v1alpha1
+kind: APIExamples
+metadata:
+  name: NICo Managed Host State Event Bus
+  version: 1.0.0
+operations:
+  'RECEIVE subscribeManagedHostStateChange':
+    host-ready:
+      eventMessage:
+        payload:
+          machine_id: dpu-gb200-rack42-node07
+          timestamp: '2026-10-05T18:00:00Z'
+          managed_host_state:
+            state: ready
