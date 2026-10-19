@@ -147,8 +147,8 @@ NICo or broker is involved.
   Mosquitto from PoC 1. Pointing the same test at a staging NATS/MQTT endpoint
   is the next step and is untested.
 - **CI workflow not yet run.** The script's exit code is CI-usable and
-  `.github/workflows/poc-conformance.yml` runs it, but this repo has no remote
-  yet, so the workflow has never executed on GitHub.
+  `.github/workflows/poc-conformance.yml` runs it, but it had not
+  executed on GitHub when this was written.
 - **The Microcks runner validates a window of traffic, not all of it.** It
   subscribes for the timeout (10 s here) and validates what arrives. States that
   are never published in the window are never checked, which is why retained

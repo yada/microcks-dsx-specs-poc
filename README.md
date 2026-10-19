@@ -1,6 +1,7 @@
-# Microcks + reShapr for NVIDIA DSX
+# microcks-dsx-specs-poc: Microcks and reShapr on NVIDIA DSX specs
 
-Small, fully reproducible proofs-of-concept showing where
+Small, locally reproducible proofs-of-concept that generate **mocks**, **MCP
+tools** and **conformance tests** from NVIDIA's DSX API specs, showing where
 [Microcks](https://microcks.io) (API mocking & contract testing) and
 [reShapr](https://reshapr.io) (OpenAPI/GraphQL/gRPC → MCP tool gateway) can
 plug directly into NVIDIA's [DSX](https://github.com/dsx-ai-factory)
@@ -20,6 +21,8 @@ Needs Docker and Python 3, plus local checkouts of `dsx-exchange` and
 `infra-controller` next to this repo (the scripts only read them, never modify them).
 
 ```sh
+git clone https://github.com/dsx-ai-factory/dsx-exchange.git ../dsx-exchange
+git clone https://github.com/dsx-ai-factory/infra-controller.git ../infra-controller
 docker compose -f microcks/docker-compose.yml up -d    # 3 containers, no login
 poc3a/run.sh    # AsyncAPI: replay dsx-exchange#117, expect 6 x [PASS]
 poc3a/run_real.sh # AsyncAPI: NICo-serialised messages vs today's nico.yaml (45/49 conform)
@@ -38,7 +41,7 @@ testing that talk before the real hardware exists relies on someone having
 hand-written a stand-in for it, and letting an AI assistant use those
 controls would mean hand-writing a translation layer for it too.
 
-These two demos show that neither has to be hand-written:
+These demos show that neither has to be hand-written, and that the descriptions can be checked automatically:
 
 - **PoC 1** — Microcks reads the official description of what the hardware
   is supposed to say, and fakes those signals automatically. No custom
@@ -47,6 +50,11 @@ These two demos show that neither has to be hand-written:
   the translation layer an AI assistant needs to call it, automatically. We
   proved it by having an AI-style tool call it directly and get the right
   answer back.
+
+- **PoC 3a / 3b** — Microcks replays two real past spec drifts
+  (dsx-exchange#117, infra-controller#5459) as automated conformance tests, so
+  the same official descriptions also flag when a real service stops matching
+  them.
 
 The rest of this document is the technical version, for anyone who wants to
 run it themselves.
@@ -73,8 +81,9 @@ against a *real* backend, catching drift automatically instead of via
 periodic manual audits. [PoC 3a](docs/poc3a-nico-drift-conformance.md)
 demonstrates this for the MQTT side by replaying a real past drift
 (dsx-exchange#117). [PoC 3b](docs/poc3b-infra-controller-rest-conformance.md)
-does the same for REST on one real drift (infra-controller#5459), against a
-stub backend; a real `rest-api` is not demonstrated yet.
+does the same for REST on one real drift (infra-controller#5459), first against
+a stub backend and then (stage 2) against a real local `rest-api` with an empty
+database.
 
 ## Architecture
 
@@ -100,14 +109,15 @@ flowchart LR
     Reshapr -->|MCP tool| Agent["AI agent / MCP client"]
 ```
 
-Two independent PoCs exercise the two halves of this diagram:
+PoC 1 and 2 exercise the two halves of this diagram; PoC 3a and 3b reuse the
+Microcks half as a test runner:
 
 | | Flow | Doc |
 |---|---|---|
 | **PoC 1** | `bms.yaml`/`nico.yaml` → Microcks → live MQTT traffic | [`docs/poc1-dsx-exchange-mqtt.md`](docs/poc1-dsx-exchange-mqtt.md) |
 | **PoC 2** | `spec.yaml` → Microcks → reShapr → MCP tool call | [`docs/poc2-infra-controller-mcp.md`](docs/poc2-infra-controller-mcp.md) |
-| **PoC 3b** | `spec.yaml` (before/after #5459 fix) → Microcks OpenAPI test runner → stub backend (stage 1) or a real local `rest-api` (stage 2) → pass/fail | [`docs/poc3b-infra-controller-rest-conformance.md`](docs/poc3b-infra-controller-rest-conformance.md) |
 | **PoC 3a** | `nico.yaml` (before/after #117) → Microcks test runner → live MQTT traffic → pass/fail | [`docs/poc3a-nico-drift-conformance.md`](docs/poc3a-nico-drift-conformance.md) |
+| **PoC 3b** | `spec.yaml` (before/after #5459 fix) → Microcks OpenAPI test runner → stub backend (stage 1) or a real local `rest-api` (stage 2) → pass/fail | [`docs/poc3b-infra-controller-rest-conformance.md`](docs/poc3b-infra-controller-rest-conformance.md) |
 
 ## Results at a glance
 
@@ -123,8 +133,10 @@ Two independent PoCs exercise the two halves of this diagram:
 | **0** | results without a captured command output or evidence file in this repo (scope and limits are listed per PoC) |
 
 Full write-up with every command and output: see
-[`docs/poc1-dsx-exchange-mqtt.md`](docs/poc1-dsx-exchange-mqtt.md) and
-[`docs/poc2-infra-controller-mcp.md`](docs/poc2-infra-controller-mcp.md).
+[`docs/poc1-dsx-exchange-mqtt.md`](docs/poc1-dsx-exchange-mqtt.md),
+[`docs/poc2-infra-controller-mcp.md`](docs/poc2-infra-controller-mcp.md),
+[`docs/poc3a-nico-drift-conformance.md`](docs/poc3a-nico-drift-conformance.md) and
+[`docs/poc3b-infra-controller-rest-conformance.md`](docs/poc3b-infra-controller-rest-conformance.md).
 
 ## What's not yet demonstrated here
 
@@ -147,8 +159,8 @@ Full write-up with every command and output: see
   and `reshapr-controllers` both ship this same CRD/operator pattern
   already.
 - Any claim about Omniverse, NIM, NeMo, Base Command, or Spectrum-X.
-- CI — a GitHub Actions workflow is included but has not run on GitHub yet
-  (this repo has no remote); every result here comes from local runs. The PoC 3b
+- CI — a GitHub Actions workflow is included but has not run on GitHub yet;
+  every result here comes from local runs. The PoC 3b
   step relies on reaching a host stub from Docker on Linux, which is untested.
 
 ## Repo layout
@@ -290,8 +302,8 @@ anything shared.
 
 `examples/*.apiexamples.yaml` and `poc3a/evidence/real.*` contain payload
 shapes derived from, or serialised by, NVIDIA's
-[`dsx-exchange`](https://github.com/NVIDIA/dsx-exchange) and
-[`infra-controller`](https://github.com/NVIDIA/infra-controller) (both
+[`dsx-exchange`](https://github.com/dsx-ai-factory/dsx-exchange) and
+[`infra-controller`](https://github.com/dsx-ai-factory/infra-controller) (both
 Apache-2.0). The specs themselves are not copied; scripts read them from a
 local checkout. This project is independent and not affiliated with or endorsed
 by NVIDIA.
