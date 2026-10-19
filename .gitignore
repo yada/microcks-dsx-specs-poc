@@ -1,0 +1,17 @@
+.DS_Store
+*.log
+!poc3a/evidence/run.log
+!poc3a/evidence/real.log
+!poc3b/evidence/run.log
+!poc3b/evidence/stage2.log
+*.swp
+.idea/
+.vscode/
+node_modules/
+.env
+poc3a/.venv/
+poc3a/real/.venv-fixture/
+poc3a/work/
+poc3b/.venv/
+poc3b/work/
+__pycache__/

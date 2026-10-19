@@ -1,0 +1,45 @@
+name: microcks-poc
+# Default PoC stack: Microcks "uber" distribution (all-in-one, embedded MongoDB-compatible
+# store, authentication disabled) + its async minion + an MQTT broker.
+# State is in-memory: restarting the app container resets it.
+# For the multi-component, Keycloak-secured stack see full/docker-compose.yml.
+services:
+  mosquitto:
+    image: eclipse-mosquitto:2
+    container_name: microcks-poc-mosquitto
+    ports:
+      - "1883:1883"
+    volumes:
+      - "./mosquitto.conf:/mosquitto/config/mosquitto.conf"
+
+  app:
+    image: quay.io/microcks/microcks-uber:1.15.0
+    container_name: microcks-poc-app
+    ports:
+      - "8080:8080"
+      - "9090:9090"
+    environment:
+      - TEST_CALLBACK_URL=http://app:8080
+      - ASYNC_MINION_URL=http://async-minion:8081
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/api/keycloak/config"]
+      start_period: 5s
+      interval: 5s
+      timeout: 3s
+      retries: 12
+
+  async-minion:
+    image: quay.io/microcks/microcks-uber-async-minion:1.15.0
+    container_name: microcks-poc-async-minion
+    restart: on-failure
+    depends_on:
+      app:
+        condition: service_healthy
+      mosquitto:
+        condition: service_started
+    ports:
+      - "8081:8081"
+    environment:
+      - MICROCKS_HOST_PORT=app:8080
+      - ASYNC_PROTOCOLS=,MQTT
+      - MQTT_SERVER=mosquitto:1883
