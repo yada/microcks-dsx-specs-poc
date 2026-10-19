@@ -126,7 +126,7 @@ Microcks half as a test runner:
 | **4 / 4** | PoCs verified end-to-end locally on pinned releases (Microcks 1.15.0, reShapr 1.1.0); PoC 3b stage 1 uses a stub backend, stage 2 a real local `rest-api` |
 | **45 / 49** | NICo-serialised messages (real `ManagedHostState` serde output, not schema-derived) that conform to today's `nico.yaml`; the 4 that don't are states missing from the spec |
 | **12 / 26** | NICo messages rejected by the pre-#117 `nico.yaml` in PoC 3a (0 rejected after #117) |
-| **1 / 1** | real `infra-controller` spec drift (#5459, `tpm` array vs object) caught by the OpenAPI test runner in PoC 3b (passes after the fix) |
+| **1 / 1** | real `infra-controller` spec drift (#5459, `tpm` array vs object) caught by the OpenAPI test runner in PoC 3b; the post-fix spec is our reconstruction of that one change because #5459 is still open |
 | **37 / 37** | `rest-api` collection endpoints (empty database) that pass Microcks' OpenAPI test against the real server in PoC 3b stage 2; a deliberately drifted spec fails on exactly 1 |
 | **263** | MCP tools generated from `infra-controller`'s real OpenAPI spec (164 paths, 263 operations) in PoC 2 |
 | **3** | spec gaps found in `dsx-exchange`, each closable with a few lines |
