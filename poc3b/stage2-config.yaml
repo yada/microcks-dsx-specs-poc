@@ -1,0 +1,34 @@
+env:
+  dev: true
+api:
+  name: nico
+  port: 8388
+  route:
+    version: v2
+db:
+  host: localhost
+  port: 35432
+  name: nico
+  user: nico
+  passwordPath: @WORK@/dbpass
+temporal:
+  host: localhost
+  port: 7233
+  namespace: default
+  queue: cloud
+  tls:
+    enabled: false
+  encryptionKeyPath: @WORK@/tkey
+metrics:
+  enabled: false
+siteManager:
+  enabled: false
+issuers:
+  - name: poc
+    issuer: http://poc-issuer
+    jwks: http://localhost:8766/jwks.json
+    audiences: ["nico-api"]
+    claimMappings:
+      - orgName: test-org-1
+        orgDisplayName: Test Org 1
+        roles: ["PROVIDER_ADMIN", "TENANT_ADMIN"]

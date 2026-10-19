@@ -1,0 +1,27 @@
+{
+  "fix_commit": "5eed3849e",
+  "operation": "GET /v2/org/{org}/nico/sku/{skuId}",
+  "results": {
+    "pre-fix": {
+      "success": false,
+      "messages": [
+        "object found, array expected "
+      ],
+      "offline_errors": [
+        "components/tpm: {'vendor': 'STMicroelectronics', 'version': '2.0'} is not of type 'array'"
+      ]
+    },
+    "post-fix": {
+      "success": true,
+      "messages": [],
+      "offline_errors": []
+    }
+  },
+  "checks": {
+    "stub serves the real wire shape (tpm is an object)": true,
+    "test fails on the pre-fix spec (tpm documented as array)": true,
+    "offline jsonschema attributes the pre-fix failure to components/tpm": true,
+    "test passes on the post-fix spec": true,
+    "Microcks verdicts match offline jsonschema in both": true
+  }
+}

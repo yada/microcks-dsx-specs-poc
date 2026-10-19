@@ -1,0 +1,33 @@
+{
+  "infra_controller_commit": "ee29e315f",
+  "endpoints_tested": 37,
+  "endpoints_skipped": {
+    "/v2/org/{org}/nico/tenant/current/routing-profile": 400,
+    "/v2/org/{org}/nico/measured-boot/trusted-machine": 400,
+    "/v2/org/{org}/nico/measured-boot/trusted-profile": 400,
+    "/v2/org/{org}/nico/credential/rotation": 400,
+    "/v2/org/{org}/nico/site-explorer/endpoint": 400,
+    "/v2/org/{org}/nico/sku": 400,
+    "/v2/org/{org}/nico/dpu": 400,
+    "/v2/org/{org}/nico/machine/gpu/stats": 400,
+    "/v2/org/{org}/nico/machine/instance-type/stats/summary": 400,
+    "/v2/org/{org}/nico/machine/instance-type/stats": 400,
+    "/v2/org/{org}/nico/tenant/instance-type/stats": 400,
+    "/v2/org/{org}/nico/domain/nvlink": 400,
+    "/v2/org/{org}/nico/rack": 400,
+    "/v2/org/{org}/nico/rack/validation": 400,
+    "/v2/org/{org}/nico/tray": 400,
+    "/v2/org/{org}/nico/task/rule": 400,
+    "/v2/org/{org}/nico/task": 400,
+    "/v2/org/{org}/nico/task/run": 400,
+    "/v2/org/{org}/nico/tray/validation": 400,
+    "/v2/org/{org}/nico/ipxe-template": 403
+  },
+  "failed": {},
+  "checks": {
+    "real rest-api rejects unauthenticated calls (401)": true,
+    "Microcks exercised every endpoint that answers 200": true,
+    "Microcks passes all operations against the real server": true,
+    "negative control: Microcks fails exactly /metadata on a deliberately drifted spec": true
+  }
+}

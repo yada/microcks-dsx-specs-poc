@@ -1,0 +1,11 @@
+pre-fix: test.success=False  offline jsonschema errors=1
+   microcks: object found, array expected 
+   jsonschema: components/tpm: {'vendor': 'STMicroelectronics', 'version': '2.0'} is not of type 'array'
+post-fix: test.success=True  offline jsonschema errors=0
+
+=== Checks
+  [PASS] stub serves the real wire shape (tpm is an object)
+  [PASS] test fails on the pre-fix spec (tpm documented as array)
+  [PASS] offline jsonschema attributes the pre-fix failure to components/tpm
+  [PASS] test passes on the post-fix spec
+  [PASS] Microcks verdicts match offline jsonschema in both

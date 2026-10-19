@@ -1,0 +1,9 @@
+37 endpoints answer 200 on the real API; 20 skipped (HTTP [400, 403]: required query params / not allowed for this token)
+negative control (Metadata.version documented as integer): failed operations = ['GET /v2/org/{org}/nico/metadata']
+Microcks: success=True  operations=37  failed=0
+
+=== Checks
+  [PASS] real rest-api rejects unauthenticated calls (401)
+  [PASS] Microcks exercised every endpoint that answers 200
+  [PASS] Microcks passes all operations against the real server
+  [PASS] negative control: Microcks fails exactly /metadata on a deliberately drifted spec
