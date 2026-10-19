@@ -1,0 +1,15 @@
+upload spec: NICo Managed Host State Event Bus:real-fixtures
+upload APIExamples (secondary): NICo Managed Host State Event Bus:real-fixtures
+
+=== nico.yaml @ dsx-exchange 28c66bf5b vs 49 examples published by Microcks
+  distinct messages seen=49/49  pass=45  test.success=False  offline-agreement=True
+    FAIL 31-dpuinit                   must be valid to one and only one schema, but 0 are valid | must be valid to one and only one schema, but 0 ar
+    FAIL 33-dpureprovision            must be valid to one and only one schema, but 0 are valid | must be valid to one and only one schema, but 0 ar
+    FAIL 34-dpureprovision            must be valid to one and only one schema, but 0 are valid | must be valid to one and only one schema, but 0 ar
+    FAIL 41-hostinit-spdmmeasuring    must be valid to one and only one schema, but 0 are valid | does not have a value in the enumeration ["dpudisc
+
+=== Checks
+  [PASS] the runner saw every example Microcks published
+  [PASS] Microcks verdicts match offline jsonschema
+
+result: 45 of 49 real messages conform; 4 do not: 31-dpuinit, 33-dpureprovision, 34-dpureprovision, 41-hostinit-spdmmeasuring

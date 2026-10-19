@@ -1,0 +1,545 @@
+{
+  "dsx_exchange_before": "16867bd885b08080067f96b5e14cf6dad2d6d924",
+  "dsx_exchange_after": "4e8b71f0584913a5f88fa728dc9fe724337aa97b",
+  "states_pre": 15,
+  "states_post": 26,
+  "states_added": [
+    "decommissioning",
+    "reset",
+    "bootconfiguring",
+    "maintenance",
+    "configureastra",
+    "rotatingbmc",
+    "rotatinghostuefi",
+    "rotatingdpuuefi",
+    "rotatingniclockdown",
+    "preassignedmeasuring",
+    "startassignmentcycle"
+  ],
+  "scenarios": [
+    {
+      "name": "A. pre-#117 spec vs valid NICo traffic (drift)",
+      "test_id": "6ad677395bdf8c507280b3d8",
+      "success": false,
+      "received": 26,
+      "sent": 26,
+      "rows": [
+        {
+          "message": "assigned",
+          "microcks_pass": true,
+          "offline_pass": true,
+          "error": ""
+        },
+        {
+          "message": "bomvalidating",
+          "microcks_pass": true,
+          "offline_pass": true,
+          "error": ""
+        },
+        {
+          "message": "bootconfiguring",
+          "microcks_pass": false,
+          "offline_pass": false,
+          "error": "must be valid to one and only one schema, but 0 are valid | does not have a value in the enumeration [\"dpudiscoveringstate\"] | required property 'dpu_states' not found | does not have a value in the enumeration [\"dpuinit\"] | required property 'dpu_states' not found | does not have a value in the enumeration [\"hostinit\"] | required property 'machine_state' not found | does not have a value in the enumeration [\"validation\"] | required property 'validation_state' not found | does not have a value in the enumeration [\"ready\"] | does not have a value in the enumeration [\"assigned\"] | required property 'instance_state' not found | does not have a value in the enumeration [\"waitingforcleanup\"] | required property 'cleanup_state' not found | does not have a value in the enumeration [\"forcedeletion\"] | does not have a value in the enumeration [\"created\"] | does not have a value in the enumeration [\"failed\"] | required property 'details' not found | required property 'machine_id' not found | does not have a value in the enumeration [\"dpureprovision\"] | required property 'dpu_states' not found | does not have a value in the enumeration [\"hostreprovision\"] | required property 'reprovision_state' not found | does not have a value in the enumeration [\"measuring\"] | required property 'measuring_state' not found | does not have a value in the enumeration [\"postassignedmeasuring\"] | required property 'measuring_state' not found | does not have a value in the enumeration [\"bomvalidating\"] | required property 'bom_validating_state' not found"
+        },
+        {
+          "message": "configureastra",
+          "microcks_pass": false,
+          "offline_pass": false,
+          "error": "must be valid to one and only one schema, but 0 are valid | does not have a value in the enumeration [\"dpudiscoveringstate\"] | required property 'dpu_states' not found | does not have a value in the enumeration [\"dpuinit\"] | required property 'dpu_states' not found | does not have a value in the enumeration [\"hostinit\"] | required property 'machine_state' not found | does not have a value in the enumeration [\"validation\"] | required property 'validation_state' not found | does not have a value in the enumeration [\"ready\"] | does not have a value in the enumeration [\"assigned\"] | required property 'instance_state' not found | does not have a value in the enumeration [\"waitingforcleanup\"] | required property 'cleanup_state' not found | does not have a value in the enumeration [\"forcedeletion\"] | does not have a value in the enumeration [\"created\"] | does not have a value in the enumeration [\"failed\"] | required property 'details' not found | required property 'machine_id' not found | does not have a value in the enumeration [\"dpureprovision\"] | required property 'dpu_states' not found | does not have a value in the enumeration [\"hostreprovision\"] | required property 'reprovision_state' not found | does not have a value in the enumeration [\"measuring\"] | required property 'measuring_state' not found | does not have a value in the enumeration [\"postassignedmeasuring\"] | required property 'measuring_state' not found | does not have a value in the enumeration [\"bomvalidating\"] | required property 'bom_validating_state' not found"
+        },
+        {
+          "message": "created",
+          "microcks_pass": true,
+          "offline_pass": true,
+          "error": ""
+        },
+        {
+          "message": "decommissioning",
+          "microcks_pass": false,
+          "offline_pass": false,
+          "error": "must be valid to one and only one schema, but 0 are valid | does not have a value in the enumeration [\"dpudiscoveringstate\"] | required property 'dpu_states' not found | does not have a value in the enumeration [\"dpuinit\"] | required property 'dpu_states' not found | does not have a value in the enumeration [\"hostinit\"] | required property 'machine_state' not found | does not have a value in the enumeration [\"validation\"] | required property 'validation_state' not found | does not have a value in the enumeration [\"ready\"] | does not have a value in the enumeration [\"assigned\"] | required property 'instance_state' not found | does not have a value in the enumeration [\"waitingforcleanup\"] | required property 'cleanup_state' not found | does not have a value in the enumeration [\"forcedeletion\"] | does not have a value in the enumeration [\"created\"] | does not have a value in the enumeration [\"failed\"] | required property 'details' not found | required property 'machine_id' not found | does not have a value in the enumeration [\"dpureprovision\"] | required property 'dpu_states' not found | does not have a value in the enumeration [\"hostreprovision\"] | required property 'reprovision_state' not found | does not have a value in the enumeration [\"measuring\"] | required property 'measuring_state' not found | does not have a value in the enumeration [\"postassignedmeasuring\"] | required property 'measuring_state' not found | does not have a value in the enumeration [\"bomvalidating\"] | required property 'bom_validating_state' not found"
+        },
+        {
+          "message": "dpudiscoveringstate",
+          "microcks_pass": true,
+          "offline_pass": true,
+          "error": ""
+        },
+        {
+          "message": "dpuinit",
+          "microcks_pass": true,
+          "offline_pass": true,
+          "error": ""
+        },
+        {
+          "message": "dpureprovision",
+          "microcks_pass": true,
+          "offline_pass": true,
+          "error": ""
+        },
+        {
+          "message": "failed",
+          "microcks_pass": true,
+          "offline_pass": true,
+          "error": ""
+        },
+        {
+          "message": "forcedeletion",
+          "microcks_pass": true,
+          "offline_pass": true,
+          "error": ""
+        },
+        {
+          "message": "hostinit",
+          "microcks_pass": true,
+          "offline_pass": true,
+          "error": ""
+        },
+        {
+          "message": "hostreprovision",
+          "microcks_pass": true,
+          "offline_pass": true,
+          "error": ""
+        },
+        {
+          "message": "maintenance",
+          "microcks_pass": false,
+          "offline_pass": false,
+          "error": "must be valid to one and only one schema, but 0 are valid | does not have a value in the enumeration [\"dpudiscoveringstate\"] | required property 'dpu_states' not found | does not have a value in the enumeration [\"dpuinit\"] | required property 'dpu_states' not found | does not have a value in the enumeration [\"hostinit\"] | required property 'machine_state' not found | does not have a value in the enumeration [\"validation\"] | required property 'validation_state' not found | does not have a value in the enumeration [\"ready\"] | does not have a value in the enumeration [\"assigned\"] | required property 'instance_state' not found | does not have a value in the enumeration [\"waitingforcleanup\"] | required property 'cleanup_state' not found | does not have a value in the enumeration [\"forcedeletion\"] | does not have a value in the enumeration [\"created\"] | does not have a value in the enumeration [\"failed\"] | required property 'details' not found | required property 'machine_id' not found | does not have a value in the enumeration [\"dpureprovision\"] | required property 'dpu_states' not found | does not have a value in the enumeration [\"hostreprovision\"] | required property 'reprovision_state' not found | does not have a value in the enumeration [\"measuring\"] | required property 'measuring_state' not found | does not have a value in the enumeration [\"postassignedmeasuring\"] | required property 'measuring_state' not found | does not have a value in the enumeration [\"bomvalidating\"] | required property 'bom_validating_state' not found"
+        },
+        {
+          "message": "measuring",
+          "microcks_pass": true,
+          "offline_pass": true,
+          "error": ""
+        },
+        {
+          "message": "postassignedmeasuring",
+          "microcks_pass": false,
+          "offline_pass": false,
+          "error": "must be valid to one and only one schema, but 0 are valid | does not have a value in the enumeration [\"dpudiscoveringstate\"] | required property 'dpu_states' not found | does not have a value in the enumeration [\"dpuinit\"] | required property 'dpu_states' not found | does not have a value in the enumeration [\"hostinit\"] | required property 'machine_state' not found | does not have a value in the enumeration [\"validation\"] | required property 'validation_state' not found | does not have a value in the enumeration [\"ready\"] | does not have a value in the enumeration [\"assigned\"] | required property 'instance_state' not found | does not have a value in the enumeration [\"waitingforcleanup\"] | required property 'cleanup_state' not found | does not have a value in the enumeration [\"forcedeletion\"] | does not have a value in the enumeration [\"created\"] | does not have a value in the enumeration [\"failed\"] | required property 'details' not found | required property 'machine_id' not found | does not have a value in the enumeration [\"dpureprovision\"] | required property 'dpu_states' not found | does not have a value in the enumeration [\"hostreprovision\"] | required property 'reprovision_state' not found | does not have a value in the enumeration [\"measuring\"] | required property 'measuring_state' not found | required property 'measuring_state' not found | does not have a value in the enumeration [\"bomvalidating\"] | required property 'bom_validating_state' not found"
+        },
+        {
+          "message": "preassignedmeasuring",
+          "microcks_pass": false,
+          "offline_pass": false,
+          "error": "must be valid to one and only one schema, but 0 are valid | does not have a value in the enumeration [\"dpudiscoveringstate\"] | required property 'dpu_states' not found | does not have a value in the enumeration [\"dpuinit\"] | required property 'dpu_states' not found | does not have a value in the enumeration [\"hostinit\"] | required property 'machine_state' not found | does not have a value in the enumeration [\"validation\"] | required property 'validation_state' not found | does not have a value in the enumeration [\"ready\"] | does not have a value in the enumeration [\"assigned\"] | required property 'instance_state' not found | does not have a value in the enumeration [\"waitingforcleanup\"] | required property 'cleanup_state' not found | does not have a value in the enumeration [\"forcedeletion\"] | does not have a value in the enumeration [\"created\"] | does not have a value in the enumeration [\"failed\"] | required property 'details' not found | required property 'machine_id' not found | does not have a value in the enumeration [\"dpureprovision\"] | required property 'dpu_states' not found | does not have a value in the enumeration [\"hostreprovision\"] | required property 'reprovision_state' not found | does not have a value in the enumeration [\"measuring\"] | required property 'measuring_state' not found | does not have a value in the enumeration [\"postassignedmeasuring\"] | required property 'measuring_state' not found | does not have a value in the enumeration [\"bomvalidating\"] | required property 'bom_validating_state' not found"
+        },
+        {
+          "message": "ready",
+          "microcks_pass": true,
+          "offline_pass": true,
+          "error": ""
+        },
+        {
+          "message": "reset",
+          "microcks_pass": false,
+          "offline_pass": false,
+          "error": "must be valid to one and only one schema, but 0 are valid | does not have a value in the enumeration [\"dpudiscoveringstate\"] | required property 'dpu_states' not found | does not have a value in the enumeration [\"dpuinit\"] | required property 'dpu_states' not found | does not have a value in the enumeration [\"hostinit\"] | required property 'machine_state' not found | does not have a value in the enumeration [\"validation\"] | required property 'validation_state' not found | does not have a value in the enumeration [\"ready\"] | does not have a value in the enumeration [\"assigned\"] | required property 'instance_state' not found | does not have a value in the enumeration [\"waitingforcleanup\"] | required property 'cleanup_state' not found | does not have a value in the enumeration [\"forcedeletion\"] | does not have a value in the enumeration [\"created\"] | does not have a value in the enumeration [\"failed\"] | required property 'details' not found | required property 'machine_id' not found | does not have a value in the enumeration [\"dpureprovision\"] | required property 'dpu_states' not found | does not have a value in the enumeration [\"hostreprovision\"] | required property 'reprovision_state' not found | does not have a value in the enumeration [\"measuring\"] | required property 'measuring_state' not found | does not have a value in the enumeration [\"postassignedmeasuring\"] | required property 'measuring_state' not found | does not have a value in the enumeration [\"bomvalidating\"] | required property 'bom_validating_state' not found"
+        },
+        {
+          "message": "rotatingbmc",
+          "microcks_pass": false,
+          "offline_pass": false,
+          "error": "must be valid to one and only one schema, but 0 are valid | does not have a value in the enumeration [\"dpudiscoveringstate\"] | required property 'dpu_states' not found | does not have a value in the enumeration [\"dpuinit\"] | required property 'dpu_states' not found | does not have a value in the enumeration [\"hostinit\"] | required property 'machine_state' not found | does not have a value in the enumeration [\"validation\"] | required property 'validation_state' not found | does not have a value in the enumeration [\"ready\"] | does not have a value in the enumeration [\"assigned\"] | required property 'instance_state' not found | does not have a value in the enumeration [\"waitingforcleanup\"] | required property 'cleanup_state' not found | does not have a value in the enumeration [\"forcedeletion\"] | does not have a value in the enumeration [\"created\"] | does not have a value in the enumeration [\"failed\"] | required property 'details' not found | required property 'machine_id' not found | does not have a value in the enumeration [\"dpureprovision\"] | required property 'dpu_states' not found | does not have a value in the enumeration [\"hostreprovision\"] | required property 'reprovision_state' not found | does not have a value in the enumeration [\"measuring\"] | required property 'measuring_state' not found | does not have a value in the enumeration [\"postassignedmeasuring\"] | required property 'measuring_state' not found | does not have a value in the enumeration [\"bomvalidating\"] | required property 'bom_validating_state' not found"
+        },
+        {
+          "message": "rotatingdpuuefi",
+          "microcks_pass": false,
+          "offline_pass": false,
+          "error": "must be valid to one and only one schema, but 0 are valid | does not have a value in the enumeration [\"dpudiscoveringstate\"] | required property 'dpu_states' not found | does not have a value in the enumeration [\"dpuinit\"] | required property 'dpu_states' not found | does not have a value in the enumeration [\"hostinit\"] | required property 'machine_state' not found | does not have a value in the enumeration [\"validation\"] | required property 'validation_state' not found | does not have a value in the enumeration [\"ready\"] | does not have a value in the enumeration [\"assigned\"] | required property 'instance_state' not found | does not have a value in the enumeration [\"waitingforcleanup\"] | required property 'cleanup_state' not found | does not have a value in the enumeration [\"forcedeletion\"] | does not have a value in the enumeration [\"created\"] | does not have a value in the enumeration [\"failed\"] | required property 'details' not found | required property 'machine_id' not found | does not have a value in the enumeration [\"dpureprovision\"] | required property 'dpu_states' not found | does not have a value in the enumeration [\"hostreprovision\"] | required property 'reprovision_state' not found | does not have a value in the enumeration [\"measuring\"] | required property 'measuring_state' not found | does not have a value in the enumeration [\"postassignedmeasuring\"] | required property 'measuring_state' not found | does not have a value in the enumeration [\"bomvalidating\"] | required property 'bom_validating_state' not found"
+        },
+        {
+          "message": "rotatinghostuefi",
+          "microcks_pass": false,
+          "offline_pass": false,
+          "error": "must be valid to one and only one schema, but 0 are valid | does not have a value in the enumeration [\"dpudiscoveringstate\"] | required property 'dpu_states' not found | does not have a value in the enumeration [\"dpuinit\"] | required property 'dpu_states' not found | does not have a value in the enumeration [\"hostinit\"] | required property 'machine_state' not found | does not have a value in the enumeration [\"validation\"] | required property 'validation_state' not found | does not have a value in the enumeration [\"ready\"] | does not have a value in the enumeration [\"assigned\"] | required property 'instance_state' not found | does not have a value in the enumeration [\"waitingforcleanup\"] | required property 'cleanup_state' not found | does not have a value in the enumeration [\"forcedeletion\"] | does not have a value in the enumeration [\"created\"] | does not have a value in the enumeration [\"failed\"] | required property 'details' not found | required property 'machine_id' not found | does not have a value in the enumeration [\"dpureprovision\"] | required property 'dpu_states' not found | does not have a value in the enumeration [\"hostreprovision\"] | required property 'reprovision_state' not found | does not have a value in the enumeration [\"measuring\"] | required property 'measuring_state' not found | does not have a value in the enumeration [\"postassignedmeasuring\"] | required property 'measuring_state' not found | does not have a value in the enumeration [\"bomvalidating\"] | required property 'bom_validating_state' not found"
+        },
+        {
+          "message": "rotatingniclockdown",
+          "microcks_pass": false,
+          "offline_pass": false,
+          "error": "must be valid to one and only one schema, but 0 are valid | does not have a value in the enumeration [\"dpudiscoveringstate\"] | required property 'dpu_states' not found | does not have a value in the enumeration [\"dpuinit\"] | required property 'dpu_states' not found | does not have a value in the enumeration [\"hostinit\"] | required property 'machine_state' not found | does not have a value in the enumeration [\"validation\"] | required property 'validation_state' not found | does not have a value in the enumeration [\"ready\"] | does not have a value in the enumeration [\"assigned\"] | required property 'instance_state' not found | does not have a value in the enumeration [\"waitingforcleanup\"] | required property 'cleanup_state' not found | does not have a value in the enumeration [\"forcedeletion\"] | does not have a value in the enumeration [\"created\"] | does not have a value in the enumeration [\"failed\"] | required property 'details' not found | required property 'machine_id' not found | does not have a value in the enumeration [\"dpureprovision\"] | required property 'dpu_states' not found | does not have a value in the enumeration [\"hostreprovision\"] | required property 'reprovision_state' not found | does not have a value in the enumeration [\"measuring\"] | required property 'measuring_state' not found | does not have a value in the enumeration [\"postassignedmeasuring\"] | required property 'measuring_state' not found | does not have a value in the enumeration [\"bomvalidating\"] | required property 'bom_validating_state' not found"
+        },
+        {
+          "message": "startassignmentcycle",
+          "microcks_pass": false,
+          "offline_pass": false,
+          "error": "must be valid to one and only one schema, but 0 are valid | does not have a value in the enumeration [\"dpudiscoveringstate\"] | required property 'dpu_states' not found | does not have a value in the enumeration [\"dpuinit\"] | required property 'dpu_states' not found | does not have a value in the enumeration [\"hostinit\"] | required property 'machine_state' not found | does not have a value in the enumeration [\"validation\"] | required property 'validation_state' not found | does not have a value in the enumeration [\"ready\"] | does not have a value in the enumeration [\"assigned\"] | required property 'instance_state' not found | does not have a value in the enumeration [\"waitingforcleanup\"] | required property 'cleanup_state' not found | does not have a value in the enumeration [\"forcedeletion\"] | does not have a value in the enumeration [\"created\"] | does not have a value in the enumeration [\"failed\"] | required property 'details' not found | required property 'machine_id' not found | does not have a value in the enumeration [\"dpureprovision\"] | required property 'dpu_states' not found | does not have a value in the enumeration [\"hostreprovision\"] | required property 'reprovision_state' not found | does not have a value in the enumeration [\"measuring\"] | required property 'measuring_state' not found | does not have a value in the enumeration [\"postassignedmeasuring\"] | required property 'measuring_state' not found | does not have a value in the enumeration [\"bomvalidating\"] | required property 'bom_validating_state' not found"
+        },
+        {
+          "message": "validation",
+          "microcks_pass": true,
+          "offline_pass": true,
+          "error": ""
+        },
+        {
+          "message": "waitingforcleanup",
+          "microcks_pass": true,
+          "offline_pass": true,
+          "error": ""
+        }
+      ],
+      "agree": true
+    },
+    {
+      "name": "B. post-#117 spec vs the same traffic",
+      "test_id": "6ad6774b5bdf8c507280b3f4",
+      "success": true,
+      "received": 26,
+      "sent": 26,
+      "rows": [
+        {
+          "message": "assigned",
+          "microcks_pass": true,
+          "offline_pass": true,
+          "error": ""
+        },
+        {
+          "message": "bomvalidating",
+          "microcks_pass": true,
+          "offline_pass": true,
+          "error": ""
+        },
+        {
+          "message": "bootconfiguring",
+          "microcks_pass": true,
+          "offline_pass": true,
+          "error": ""
+        },
+        {
+          "message": "configureastra",
+          "microcks_pass": true,
+          "offline_pass": true,
+          "error": ""
+        },
+        {
+          "message": "created",
+          "microcks_pass": true,
+          "offline_pass": true,
+          "error": ""
+        },
+        {
+          "message": "decommissioning",
+          "microcks_pass": true,
+          "offline_pass": true,
+          "error": ""
+        },
+        {
+          "message": "dpudiscoveringstate",
+          "microcks_pass": true,
+          "offline_pass": true,
+          "error": ""
+        },
+        {
+          "message": "dpuinit",
+          "microcks_pass": true,
+          "offline_pass": true,
+          "error": ""
+        },
+        {
+          "message": "dpureprovision",
+          "microcks_pass": true,
+          "offline_pass": true,
+          "error": ""
+        },
+        {
+          "message": "failed",
+          "microcks_pass": true,
+          "offline_pass": true,
+          "error": ""
+        },
+        {
+          "message": "forcedeletion",
+          "microcks_pass": true,
+          "offline_pass": true,
+          "error": ""
+        },
+        {
+          "message": "hostinit",
+          "microcks_pass": true,
+          "offline_pass": true,
+          "error": ""
+        },
+        {
+          "message": "hostreprovision",
+          "microcks_pass": true,
+          "offline_pass": true,
+          "error": ""
+        },
+        {
+          "message": "maintenance",
+          "microcks_pass": true,
+          "offline_pass": true,
+          "error": ""
+        },
+        {
+          "message": "measuring",
+          "microcks_pass": true,
+          "offline_pass": true,
+          "error": ""
+        },
+        {
+          "message": "postassignedmeasuring",
+          "microcks_pass": true,
+          "offline_pass": true,
+          "error": ""
+        },
+        {
+          "message": "preassignedmeasuring",
+          "microcks_pass": true,
+          "offline_pass": true,
+          "error": ""
+        },
+        {
+          "message": "ready",
+          "microcks_pass": true,
+          "offline_pass": true,
+          "error": ""
+        },
+        {
+          "message": "reset",
+          "microcks_pass": true,
+          "offline_pass": true,
+          "error": ""
+        },
+        {
+          "message": "rotatingbmc",
+          "microcks_pass": true,
+          "offline_pass": true,
+          "error": ""
+        },
+        {
+          "message": "rotatingdpuuefi",
+          "microcks_pass": true,
+          "offline_pass": true,
+          "error": ""
+        },
+        {
+          "message": "rotatinghostuefi",
+          "microcks_pass": true,
+          "offline_pass": true,
+          "error": ""
+        },
+        {
+          "message": "rotatingniclockdown",
+          "microcks_pass": true,
+          "offline_pass": true,
+          "error": ""
+        },
+        {
+          "message": "startassignmentcycle",
+          "microcks_pass": true,
+          "offline_pass": true,
+          "error": ""
+        },
+        {
+          "message": "validation",
+          "microcks_pass": true,
+          "offline_pass": true,
+          "error": ""
+        },
+        {
+          "message": "waitingforcleanup",
+          "microcks_pass": true,
+          "offline_pass": true,
+          "error": ""
+        }
+      ],
+      "agree": true
+    },
+    {
+      "name": "C. post-#117 spec vs valid + 3 deliberately broken messages",
+      "test_id": "6ad6775d5bdf8c507280b410",
+      "success": false,
+      "received": 29,
+      "sent": 29,
+      "rows": [
+        {
+          "message": "assigned",
+          "microcks_pass": true,
+          "offline_pass": true,
+          "error": ""
+        },
+        {
+          "message": "bad-missing-machine-id",
+          "microcks_pass": false,
+          "offline_pass": false,
+          "error": "required property 'machine_id' not found"
+        },
+        {
+          "message": "bad-unknown-state",
+          "microcks_pass": false,
+          "offline_pass": false,
+          "error": "must be valid to one and only one schema, but 0 are valid | does not have a value in the enumeration [\"dpudiscoveringstate\"] | required property 'dpu_states' not found | does not have a value in the enumeration [\"dpuinit\"] | required property 'dpu_states' not found | does not have a value in the enumeration [\"hostinit\"] | required property 'machine_state' not found | does not have a value in the enumeration [\"validation\"] | required property 'validation_state' not found | does not have a value in the enumeration [\"ready\"] | does not have a value in the enumeration [\"assigned\"] | required property 'instance_state' not found | does not have a value in the enumeration [\"waitingforcleanup\"] | required property 'cleanup_state' not found | does not have a value in the enumeration [\"forcedeletion\"] | does not have a value in the enumeration [\"created\"] | does not have a value in the enumeration [\"failed\"] | required property 'details' not found | required property 'machine_id' not found | does not have a value in the enumeration [\"dpureprovision\"] | required property 'dpu_states' not found | does not have a value in the enumeration [\"hostreprovision\"] | required property 'reprovision_state' not found | does not have a value in the enumeration [\"measuring\"] | required property 'measuring_state' not found | does not have a value in the enumeration [\"postassignedmeasuring\"] | required property 'attestation_mode' not found | does not have a value in the enumeration [\"bomvalidating\"] | required property 'bom_validating_state' not found | does not have a value in the enumeration [\"decommissioning\"] | required property 'decommissioning_state' not found | does not have a value in the enumeration [\"reset\"] | required property 'reset_state' not found | does not have a value in the enumeration [\"bootconfiguring\"] | required property 'desired_version' not found | required property 'desired_boot_interface' not found | required property 'post_lock_verification_retry_count' not found | required property 'boot_config_state' not found | does not have a value in the enumeration [\"maintenance\"] | required property 'operation' not found | does not have a value in the enumeration [\"configureastra\"] | required property 'configure_astra_state' not found | does not have a value in the enumeration [\"rotatingbmc\"] | required property 'retry_count' not found | does not have a value in the enumeration [\"rotatinghostuefi\"] | required property 'uefi_setup_info' not found | does not have a value in the enumeration [\"rotatingdpuuefi\"] | required property 'dpu_machine_id' not found | does not have a value in the enumeration [\"rotatingniclockdown\"] | does not have a value in the enumeration [\"preassignedmeasuring\"] | required property 'spdm_measuring_state' not found | does not have a value in the enumeration [\"startassignmentcycle\"]"
+        },
+        {
+          "message": "bad-wrong-timestamp-type",
+          "microcks_pass": false,
+          "offline_pass": false,
+          "error": "integer found, string expected"
+        },
+        {
+          "message": "bomvalidating",
+          "microcks_pass": true,
+          "offline_pass": true,
+          "error": ""
+        },
+        {
+          "message": "bootconfiguring",
+          "microcks_pass": true,
+          "offline_pass": true,
+          "error": ""
+        },
+        {
+          "message": "configureastra",
+          "microcks_pass": true,
+          "offline_pass": true,
+          "error": ""
+        },
+        {
+          "message": "created",
+          "microcks_pass": true,
+          "offline_pass": true,
+          "error": ""
+        },
+        {
+          "message": "decommissioning",
+          "microcks_pass": true,
+          "offline_pass": true,
+          "error": ""
+        },
+        {
+          "message": "dpudiscoveringstate",
+          "microcks_pass": true,
+          "offline_pass": true,
+          "error": ""
+        },
+        {
+          "message": "dpuinit",
+          "microcks_pass": true,
+          "offline_pass": true,
+          "error": ""
+        },
+        {
+          "message": "dpureprovision",
+          "microcks_pass": true,
+          "offline_pass": true,
+          "error": ""
+        },
+        {
+          "message": "failed",
+          "microcks_pass": true,
+          "offline_pass": true,
+          "error": ""
+        },
+        {
+          "message": "forcedeletion",
+          "microcks_pass": true,
+          "offline_pass": true,
+          "error": ""
+        },
+        {
+          "message": "hostinit",
+          "microcks_pass": true,
+          "offline_pass": true,
+          "error": ""
+        },
+        {
+          "message": "hostreprovision",
+          "microcks_pass": true,
+          "offline_pass": true,
+          "error": ""
+        },
+        {
+          "message": "maintenance",
+          "microcks_pass": true,
+          "offline_pass": true,
+          "error": ""
+        },
+        {
+          "message": "measuring",
+          "microcks_pass": true,
+          "offline_pass": true,
+          "error": ""
+        },
+        {
+          "message": "postassignedmeasuring",
+          "microcks_pass": true,
+          "offline_pass": true,
+          "error": ""
+        },
+        {
+          "message": "preassignedmeasuring",
+          "microcks_pass": true,
+          "offline_pass": true,
+          "error": ""
+        },
+        {
+          "message": "ready",
+          "microcks_pass": true,
+          "offline_pass": true,
+          "error": ""
+        },
+        {
+          "message": "reset",
+          "microcks_pass": true,
+          "offline_pass": true,
+          "error": ""
+        },
+        {
+          "message": "rotatingbmc",
+          "microcks_pass": true,
+          "offline_pass": true,
+          "error": ""
+        },
+        {
+          "message": "rotatingdpuuefi",
+          "microcks_pass": true,
+          "offline_pass": true,
+          "error": ""
+        },
+        {
+          "message": "rotatinghostuefi",
+          "microcks_pass": true,
+          "offline_pass": true,
+          "error": ""
+        },
+        {
+          "message": "rotatingniclockdown",
+          "microcks_pass": true,
+          "offline_pass": true,
+          "error": ""
+        },
+        {
+          "message": "startassignmentcycle",
+          "microcks_pass": true,
+          "offline_pass": true,
+          "error": ""
+        },
+        {
+          "message": "validation",
+          "microcks_pass": true,
+          "offline_pass": true,
+          "error": ""
+        },
+        {
+          "message": "waitingforcleanup",
+          "microcks_pass": true,
+          "offline_pass": true,
+          "error": ""
+        }
+      ],
+      "agree": true
+    }
+  ],
+  "checks": {
+    "A: every message was received by the runner": true,
+    "A: test fails on pre-#117 spec": true,
+    "A: all 11 states added by #117 are rejected": true,
+    "B: test passes on post-#117 spec, all messages valid": true,
+    "C: exactly the 3 broken messages fail": true,
+    "Microcks verdicts match offline jsonschema in A, B, C": true
+  }
+}

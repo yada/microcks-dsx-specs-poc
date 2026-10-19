@@ -1,0 +1,40 @@
+pre-117: dsx-exchange 16867bd88  states=15
+post-117: dsx-exchange 4e8b71f05  states=26
+states added by #117 (11): decommissioning, reset, bootconfiguring, maintenance, configureastra, rotatingbmc, rotatinghostuefi, rotatingdpuuefi, rotatingniclockdown, preassignedmeasuring, startassignmentcycle
+
+=== A. pre-#117 spec vs valid NICo traffic (drift)
+  upload nico-pre-117.yaml: NICo Managed Host State Event Bus:pre-117
+  received=26/26  pass=14  fail=12  test.success=False  offline-agreement=True
+    FAIL bootconfiguring              must be valid to one and only one schema, but 0 are valid | does not have a value in the enumeration ["dpudisc
+    FAIL configureastra               must be valid to one and only one schema, but 0 are valid | does not have a value in the enumeration ["dpudisc
+    FAIL decommissioning              must be valid to one and only one schema, but 0 are valid | does not have a value in the enumeration ["dpudisc
+    FAIL maintenance                  must be valid to one and only one schema, but 0 are valid | does not have a value in the enumeration ["dpudisc
+    FAIL postassignedmeasuring        must be valid to one and only one schema, but 0 are valid | does not have a value in the enumeration ["dpudisc
+    FAIL preassignedmeasuring         must be valid to one and only one schema, but 0 are valid | does not have a value in the enumeration ["dpudisc
+    FAIL reset                        must be valid to one and only one schema, but 0 are valid | does not have a value in the enumeration ["dpudisc
+    FAIL rotatingbmc                  must be valid to one and only one schema, but 0 are valid | does not have a value in the enumeration ["dpudisc
+    FAIL rotatingdpuuefi              must be valid to one and only one schema, but 0 are valid | does not have a value in the enumeration ["dpudisc
+    FAIL rotatinghostuefi             must be valid to one and only one schema, but 0 are valid | does not have a value in the enumeration ["dpudisc
+    FAIL rotatingniclockdown          must be valid to one and only one schema, but 0 are valid | does not have a value in the enumeration ["dpudisc
+    FAIL startassignmentcycle         must be valid to one and only one schema, but 0 are valid | does not have a value in the enumeration ["dpudisc
+
+=== B. post-#117 spec vs the same traffic
+  upload nico-post-117.yaml: NICo Managed Host State Event Bus:post-117
+  received=26/26  pass=26  fail=0  test.success=True  offline-agreement=True
+
+=== C. post-#117 spec vs valid + 3 deliberately broken messages
+  upload nico-post-117.yaml: NICo Managed Host State Event Bus:post-117
+  received=29/29  pass=26  fail=3  test.success=False  offline-agreement=True
+    FAIL bad-missing-machine-id       required property 'machine_id' not found
+    FAIL bad-unknown-state            must be valid to one and only one schema, but 0 are valid | does not have a value in the enumeration ["dpudisc
+    FAIL bad-wrong-timestamp-type     integer found, string expected
+
+=== Checks
+  [PASS] A: every message was received by the runner
+  [PASS] A: test fails on pre-#117 spec
+  [PASS] A: all 11 states added by #117 are rejected
+  [PASS] B: test passes on post-#117 spec, all messages valid
+  [PASS] C: exactly the 3 broken messages fail
+  [PASS] Microcks verdicts match offline jsonschema in A, B, C
+
+evidence written to poc3a/evidence/results.json

@@ -1,0 +1,543 @@
+# Messages serialised by infra-controller's real ManagedHostState serde types (see poc3a/real/).
+# machine_id is a zero test id and timestamp is fixed; the state bodies are what NICo emits.
+apiVersion: mocks.microcks.io/v1alpha1
+kind: APIExamples
+metadata:
+  name: NICo Managed Host State Event Bus
+  version: 1.0.0
+operations:
+  RECEIVE subscribeManagedHostStateChange:
+    01-assigned-bootingwithdiscoveryimage:
+      eventMessage:
+        payload:
+          machine_id: fm100hs0000000000000000000000000000000000000000000000000000
+          timestamp: '2026-10-05T18:00:00Z'
+          managed_host_state:
+            state: assigned
+            instance_state:
+              state: bootingwithdiscoveryimage
+              retry:
+                count: 10
+    02-assigned-bootingwithdiscoveryimage:
+      eventMessage:
+        payload:
+          machine_id: fm100hs0000000000000000000000000000000000000000000000000000
+          timestamp: '2026-10-05T18:00:00Z'
+          managed_host_state:
+            state: assigned
+            instance_state:
+              state: bootingwithdiscoveryimage
+              retry:
+                count: 0
+    03-assigned-dpureprovision:
+      eventMessage:
+        payload:
+          machine_id: fm100hs0000000000000000000000000000000000000000000000000000
+          timestamp: '2026-10-05T18:00:00Z'
+          managed_host_state:
+            state: assigned
+            instance_state:
+              state: dpureprovision
+              dpu_states:
+                states:
+                  fm100ds7blqjsadm2uuh3qqbf1h7k8pmf47um6v9uckrg7l03po8mhqgvng: firmwareupgrade
+    04-assigned-hostplatformconfiguration:
+      eventMessage:
+        payload:
+          machine_id: fm100hs0000000000000000000000000000000000000000000000000000
+          timestamp: '2026-10-05T18:00:00Z'
+          managed_host_state:
+            state: assigned
+            instance_state:
+              state: hostplatformconfiguration
+              platform_config_state:
+                state: pollingbiossetup
+                retry_count: 0
+    05-assigned-ready:
+      eventMessage:
+        payload:
+          machine_id: fm100hs0000000000000000000000000000000000000000000000000000
+          timestamp: '2026-10-05T18:00:00Z'
+          managed_host_state:
+            state: assigned
+            instance_state:
+              state: ready
+    06-assigned-waitingfornetworkconfig:
+      eventMessage:
+        payload:
+          machine_id: fm100hs0000000000000000000000000000000000000000000000000000
+          timestamp: '2026-10-05T18:00:00Z'
+          managed_host_state:
+            state: assigned
+            instance_state:
+              state: waitingfornetworkconfig
+    07-configureastra-enablenics:
+      eventMessage:
+        payload:
+          machine_id: fm100hs0000000000000000000000000000000000000000000000000000
+          timestamp: '2026-10-05T18:00:00Z'
+          managed_host_state:
+            state: configureastra
+            configure_astra_state:
+              state: enablenics
+    08-configureastra-waitingforpowercycle:
+      eventMessage:
+        payload:
+          machine_id: fm100hs0000000000000000000000000000000000000000000000000000
+          timestamp: '2026-10-05T18:00:00Z'
+          managed_host_state:
+            state: configureastra
+            configure_astra_state:
+              state: waitingforpowercycle
+    09-created:
+      eventMessage:
+        payload:
+          machine_id: fm100hs0000000000000000000000000000000000000000000000000000
+          timestamp: '2026-10-05T18:00:00Z'
+          managed_host_state:
+            state: created
+    10-decommissioning-decommissioned:
+      eventMessage:
+        payload:
+          machine_id: fm100hs0000000000000000000000000000000000000000000000000000
+          timestamp: '2026-10-05T18:00:00Z'
+          managed_host_state:
+            state: decommissioning
+            decommissioning_state:
+              state: decommissioned
+    11-decommissioning-deletingmanagedcredentials:
+      eventMessage:
+        payload:
+          machine_id: fm100hs0000000000000000000000000000000000000000000000000000
+          timestamp: '2026-10-05T18:00:00Z'
+          managed_host_state:
+            state: decommissioning
+            decommissioning_state:
+              state: deletingmanagedcredentials
+    12-decommissioning-suppressingbmcdhcp:
+      eventMessage:
+        payload:
+          machine_id: fm100hs0000000000000000000000000000000000000000000000000000
+          timestamp: '2026-10-05T18:00:00Z'
+          managed_host_state:
+            state: decommissioning
+            decommissioning_state:
+              state: suppressingbmcdhcp
+    13-decommissioning-suppressingsiteexplorer:
+      eventMessage:
+        payload:
+          machine_id: fm100hs0000000000000000000000000000000000000000000000000000
+          timestamp: '2026-10-05T18:00:00Z'
+          managed_host_state:
+            state: decommissioning
+            decommissioning_state:
+              state: suppressingsiteexplorer
+    14-decommissioning-waitingforbmcdhcpacknowledgement:
+      eventMessage:
+        payload:
+          machine_id: fm100hs0000000000000000000000000000000000000000000000000000
+          timestamp: '2026-10-05T18:00:00Z'
+          managed_host_state:
+            state: decommissioning
+            decommissioning_state:
+              state: waitingforbmcdhcpacknowledgement
+    15-dpudiscoveringstate:
+      eventMessage:
+        payload:
+          machine_id: fm100hs0000000000000000000000000000000000000000000000000000
+          timestamp: '2026-10-05T18:00:00Z'
+          managed_host_state:
+            state: dpudiscoveringstate
+            dpu_states:
+              states:
+                fm100ds7blqjsadm2uuh3qqbf1h7k8pmf47um6v9uckrg7l03po8mhqgvng:
+                  dpudiscoverystate: enablesecureboot
+                  count: 0
+                  enable_secure_boot_state:
+                    disablesecurebootstate: checksecurebootstatus
+    16-dpudiscoveringstate:
+      eventMessage:
+        payload:
+          machine_id: fm100hs0000000000000000000000000000000000000000000000000000
+          timestamp: '2026-10-05T18:00:00Z'
+          managed_host_state:
+            state: dpudiscoveringstate
+            dpu_states:
+              states:
+                fm100ds7blqjsadm2uuh3qqbf1h7k8pmf47um6v9uckrg7l03po8mhqgvng:
+                  dpudiscoverystate: enablesecureboot
+                  count: 0
+                  enable_secure_boot_state:
+                    disablesecurebootstate: rebootdpu
+                    reboot_count: 0
+    17-dpudiscoveringstate:
+      eventMessage:
+        payload:
+          machine_id: fm100hs0000000000000000000000000000000000000000000000000000
+          timestamp: '2026-10-05T18:00:00Z'
+          managed_host_state:
+            state: dpudiscoveringstate
+            dpu_states:
+              states:
+                fm100ds7blqjsadm2uuh3qqbf1h7k8pmf47um6v9uckrg7l03po8mhqgvng:
+                  dpudiscoverystate: enablesecureboot
+                  count: 0
+                  enable_secure_boot_state:
+                    disablesecurebootstate: rebootdpu
+                    reboot_count: 1
+    18-dpudiscoveringstate:
+      eventMessage:
+        payload:
+          machine_id: fm100hs0000000000000000000000000000000000000000000000000000
+          timestamp: '2026-10-05T18:00:00Z'
+          managed_host_state:
+            state: dpudiscoveringstate
+            dpu_states:
+              states:
+                fm100ds7blqjsadm2uuh3qqbf1h7k8pmf47um6v9uckrg7l03po8mhqgvng:
+                  dpudiscoverystate: enablesecureboot
+                  count: 0
+                  enable_secure_boot_state:
+                    disablesecurebootstate: setsecureboot
+    19-dpudiscoveringstate:
+      eventMessage:
+        payload:
+          machine_id: fm100hs0000000000000000000000000000000000000000000000000000
+          timestamp: '2026-10-05T18:00:00Z'
+          managed_host_state:
+            state: dpudiscoveringstate
+            dpu_states:
+              states:
+                fm100ds7blqjsadm2uuh3qqbf1h7k8pmf47um6v9uckrg7l03po8mhqgvng:
+                  dpudiscoverystate: enablesecureboot
+                  count: 1
+                  enable_secure_boot_state:
+                    disablesecurebootstate: checksecurebootstatus
+    20-dpudiscoveringstate:
+      eventMessage:
+        payload:
+          machine_id: fm100hs0000000000000000000000000000000000000000000000000000
+          timestamp: '2026-10-05T18:00:00Z'
+          managed_host_state:
+            state: dpudiscoveringstate
+            dpu_states:
+              states:
+                fm100ds7blqjsadm2uuh3qqbf1h7k8pmf47um6v9uckrg7l03po8mhqgvng:
+                  dpudiscoverystate: configuring
+    21-dpudiscoveringstate:
+      eventMessage:
+        payload:
+          machine_id: fm100hs0000000000000000000000000000000000000000000000000000
+          timestamp: '2026-10-05T18:00:00Z'
+          managed_host_state:
+            state: dpudiscoveringstate
+            dpu_states:
+              states:
+                fm100ds7blqjsadm2uuh3qqbf1h7k8pmf47um6v9uckrg7l03po8mhqgvng:
+                  dpudiscoverystate: enablershim
+    22-dpudiscoveringstate:
+      eventMessage:
+        payload:
+          machine_id: fm100hs0000000000000000000000000000000000000000000000000000
+          timestamp: '2026-10-05T18:00:00Z'
+          managed_host_state:
+            state: dpudiscoveringstate
+            dpu_states:
+              states:
+                fm100ds7blqjsadm2uuh3qqbf1h7k8pmf47um6v9uckrg7l03po8mhqgvng:
+                  dpudiscoverystate: initializing
+    23-dpuinit:
+      eventMessage:
+        payload:
+          machine_id: fm100hs0000000000000000000000000000000000000000000000000000
+          timestamp: '2026-10-05T18:00:00Z'
+          managed_host_state:
+            state: dpuinit
+            dpu_states:
+              states:
+                fm100ds7blqjsadm2uuh3qqbf1h7k8pmf47um6v9uckrg7l03po8mhqgvng:
+                  dpustate: init
+    24-dpuinit:
+      eventMessage:
+        payload:
+          machine_id: fm100hs0000000000000000000000000000000000000000000000000000
+          timestamp: '2026-10-05T18:00:00Z'
+          managed_host_state:
+            state: dpuinit
+            dpu_states:
+              states:
+                fm100ds7blqjsadm2uuh3qqbf1h7k8pmf47um6v9uckrg7l03po8mhqgvng:
+                  dpustate: installdpuos
+                  substate:
+                    installdpuosstate: installingbfb
+    25-dpuinit:
+      eventMessage:
+        payload:
+          machine_id: fm100hs0000000000000000000000000000000000000000000000000000
+          timestamp: '2026-10-05T18:00:00Z'
+          managed_host_state:
+            state: dpuinit
+            dpu_states:
+              states:
+                fm100ds7blqjsadm2uuh3qqbf1h7k8pmf47um6v9uckrg7l03po8mhqgvng:
+                  dpustate: installdpuos
+                  substate:
+                    installdpuosstate: waitforinstallcomplete
+                    task_id: '0'
+                    progress: '0'
+    26-dpuinit:
+      eventMessage:
+        payload:
+          machine_id: fm100hs0000000000000000000000000000000000000000000000000000
+          timestamp: '2026-10-05T18:00:00Z'
+          managed_host_state:
+            state: dpuinit
+            dpu_states:
+              states:
+                fm100ds7blqjsadm2uuh3qqbf1h7k8pmf47um6v9uckrg7l03po8mhqgvng:
+                  dpustate: pollingbiossetup
+    27-dpuinit:
+      eventMessage:
+        payload:
+          machine_id: fm100hs0000000000000000000000000000000000000000000000000000
+          timestamp: '2026-10-05T18:00:00Z'
+          managed_host_state:
+            state: dpuinit
+            dpu_states:
+              states:
+                fm100ds7blqjsadm2uuh3qqbf1h7k8pmf47um6v9uckrg7l03po8mhqgvng:
+                  dpustate: waitingfornetworkconfig
+    28-dpuinit:
+      eventMessage:
+        payload:
+          machine_id: fm100hs0000000000000000000000000000000000000000000000000000
+          timestamp: '2026-10-05T18:00:00Z'
+          managed_host_state:
+            state: dpuinit
+            dpu_states:
+              states:
+                fm100ds7blqjsadm2uuh3qqbf1h7k8pmf47um6v9uckrg7l03po8mhqgvng:
+                  dpustate: waitingforplatformconfiguration
+    29-dpuinit:
+      eventMessage:
+        payload:
+          machine_id: fm100hs0000000000000000000000000000000000000000000000000000
+          timestamp: '2026-10-05T18:00:00Z'
+          managed_host_state:
+            state: dpuinit
+            dpu_states:
+              states:
+                fm100ds7blqjsadm2uuh3qqbf1h7k8pmf47um6v9uckrg7l03po8mhqgvng:
+                  dpustate: waitingforplatformpowercycle
+                  substate:
+                    state: 'off'
+    30-dpuinit:
+      eventMessage:
+        payload:
+          machine_id: fm100hs0000000000000000000000000000000000000000000000000000
+          timestamp: '2026-10-05T18:00:00Z'
+          managed_host_state:
+            state: dpuinit
+            dpu_states:
+              states:
+                fm100ds7blqjsadm2uuh3qqbf1h7k8pmf47um6v9uckrg7l03po8mhqgvng:
+                  dpustate: waitingforplatformpowercycle
+                  substate:
+                    state: 'on'
+    31-dpuinit:
+      eventMessage:
+        payload:
+          machine_id: fm100hs0000000000000000000000000000000000000000000000000000
+          timestamp: '2026-10-05T18:00:00Z'
+          managed_host_state:
+            state: dpuinit
+            dpu_states:
+              states:
+                fm100ds7blqjsadm2uuh3qqbf1h7k8pmf47um6v9uckrg7l03po8mhqgvng:
+                  dpustate: waitingforplatformpoweroff
+    32-dpureprovision:
+      eventMessage:
+        payload:
+          machine_id: fm100hs0000000000000000000000000000000000000000000000000000
+          timestamp: '2026-10-05T18:00:00Z'
+          managed_host_state:
+            state: dpureprovision
+            dpu_states:
+              states:
+                fm100ds7blqjsadm2uuh3qqbf1h7k8pmf47um6v9uckrg7l03po8mhqgvng: firmwareupgrade
+    33-dpureprovision:
+      eventMessage:
+        payload:
+          machine_id: fm100hs0000000000000000000000000000000000000000000000000000
+          timestamp: '2026-10-05T18:00:00Z'
+          managed_host_state:
+            state: dpureprovision
+            dpu_states:
+              states:
+                fm100ds7blqjsadm2uuh3qqbf1h7k8pmf47um6v9uckrg7l03po8mhqgvng:
+                  configurehostboot:
+                    retry_count: 2
+    34-dpureprovision:
+      eventMessage:
+        payload:
+          machine_id: fm100hs0000000000000000000000000000000000000000000000000000
+          timestamp: '2026-10-05T18:00:00Z'
+          managed_host_state:
+            state: dpureprovision
+            dpu_states:
+              states:
+                fm100ds7blqjsadm2uuh3qqbf1h7k8pmf47um6v9uckrg7l03po8mhqgvng:
+                  unlockhostforbootrepair:
+                    unlock_host_state:
+                      state: disablelockdown
+    35-hostinit-enableipmioverlan:
+      eventMessage:
+        payload:
+          machine_id: fm100hs0000000000000000000000000000000000000000000000000000
+          timestamp: '2026-10-05T18:00:00Z'
+          managed_host_state:
+            state: hostinit
+            machine_state:
+              state: enableipmioverlan
+    36-hostinit-measuring:
+      eventMessage:
+        payload:
+          machine_id: fm100hs0000000000000000000000000000000000000000000000000000
+          timestamp: '2026-10-05T18:00:00Z'
+          managed_host_state:
+            state: hostinit
+            machine_state:
+              state: measuring
+              measuring_state: waitingformeasurements
+    37-hostinit-pollingbiossetup:
+      eventMessage:
+        payload:
+          machine_id: fm100hs0000000000000000000000000000000000000000000000000000
+          timestamp: '2026-10-05T18:00:00Z'
+          managed_host_state:
+            state: hostinit
+            machine_state:
+              state: pollingbiossetup
+              retry_count: 0
+    38-hostinit-pollingbiossetup:
+      eventMessage:
+        payload:
+          machine_id: fm100hs0000000000000000000000000000000000000000000000000000
+          timestamp: '2026-10-05T18:00:00Z'
+          managed_host_state:
+            state: hostinit
+            machine_state:
+              state: pollingbiossetup
+              retry_count: 2
+    39-hostinit-setbootorder:
+      eventMessage:
+        payload:
+          machine_id: fm100hs0000000000000000000000000000000000000000000000000000
+          timestamp: '2026-10-05T18:00:00Z'
+          managed_host_state:
+            state: hostinit
+            machine_state:
+              state: setbootorder
+              set_boot_order_info:
+                set_boot_order_state:
+                  state: checkbootorder
+                retry_count: 0
+    40-hostinit-setbootorder:
+      eventMessage:
+        payload:
+          machine_id: fm100hs0000000000000000000000000000000000000000000000000000
+          timestamp: '2026-10-05T18:00:00Z'
+          managed_host_state:
+            state: hostinit
+            machine_state:
+              state: setbootorder
+              set_boot_order_info:
+                set_boot_order_state:
+                  state: setbootorder
+                retry_count: 0
+    41-hostinit-spdmmeasuring:
+      eventMessage:
+        payload:
+          machine_id: fm100hs0000000000000000000000000000000000000000000000000000
+          timestamp: '2026-10-05T18:00:00Z'
+          managed_host_state:
+            state: hostinit
+            machine_state:
+              state: spdmmeasuring
+              spdm_measuring_state: triggermeasurements
+    42-hostinit-waitingfordiscovery:
+      eventMessage:
+        payload:
+          machine_id: fm100hs0000000000000000000000000000000000000000000000000000
+          timestamp: '2026-10-05T18:00:00Z'
+          managed_host_state:
+            state: hostinit
+            machine_state:
+              state: waitingfordiscovery
+    43-hostinit-waitingforlockdown:
+      eventMessage:
+        payload:
+          machine_id: fm100hs0000000000000000000000000000000000000000000000000000
+          timestamp: '2026-10-05T18:00:00Z'
+          managed_host_state:
+            state: hostinit
+            machine_state:
+              state: waitingforlockdown
+              lockdown_info:
+                state: setlockdown
+                mode: enable
+    44-hostinit-waitingforplatformconfiguration:
+      eventMessage:
+        payload:
+          machine_id: fm100hs0000000000000000000000000000000000000000000000000000
+          timestamp: '2026-10-05T18:00:00Z'
+          managed_host_state:
+            state: hostinit
+            machine_state:
+              state: waitingforplatformconfiguration
+              retry_count: 0
+    45-maintenance:
+      eventMessage:
+        payload:
+          machine_id: fm100hs0000000000000000000000000000000000000000000000000000
+          timestamp: '2026-10-05T18:00:00Z'
+          managed_host_state:
+            state: maintenance
+            operation:
+              operation: poweroff
+              graceful: false
+    46-maintenance:
+      eventMessage:
+        payload:
+          machine_id: fm100hs0000000000000000000000000000000000000000000000000000
+          timestamp: '2026-10-05T18:00:00Z'
+          managed_host_state:
+            state: maintenance
+            operation:
+              operation: poweroff
+              graceful: true
+    47-maintenance:
+      eventMessage:
+        payload:
+          machine_id: fm100hs0000000000000000000000000000000000000000000000000000
+          timestamp: '2026-10-05T18:00:00Z'
+          managed_host_state:
+            state: maintenance
+            operation:
+              operation: poweron
+    48-maintenance:
+      eventMessage:
+        payload:
+          machine_id: fm100hs0000000000000000000000000000000000000000000000000000
+          timestamp: '2026-10-05T18:00:00Z'
+          managed_host_state:
+            state: maintenance
+            operation:
+              operation: reset
+    49-ready:
+      eventMessage:
+        payload:
+          machine_id: fm100hs0000000000000000000000000000000000000000000000000000
+          timestamp: '2026-10-05T18:00:00Z'
+          managed_host_state:
+            state: ready
