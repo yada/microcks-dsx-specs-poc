@@ -1,0 +1,41 @@
+name: poc-conformance
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  poc3:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+
+      # The scripts only read fixed commits through `git show`, so blobless
+      # clones are enough and keep the 240 MB infra-controller repo cheap.
+      - name: Clone upstream spec repos
+        run: |
+          git clone --quiet --filter=blob:none --no-checkout https://github.com/dsx-ai-factory/dsx-exchange.git "$RUNNER_TEMP/dsx-exchange"
+          git clone --quiet --filter=blob:none --no-checkout https://github.com/dsx-ai-factory/infra-controller.git "$RUNNER_TEMP/infra-controller"
+
+      - name: Start Microcks (default uber stack)
+        run: docker compose -f microcks/docker-compose.yml up -d --wait
+
+      - name: PoC 3a - AsyncAPI drift (dsx-exchange#117)
+        run: poc3a/run.sh --dsx-exchange "$RUNNER_TEMP/dsx-exchange"
+
+      # On Linux there is no host.docker.internal; the stub backend is reached
+      # through the compose network's gateway.
+      - name: PoC 3b - OpenAPI drift (infra-controller#5459), stub backend
+        run: |
+          GW=$(docker network inspect microcks-poc_default --format '{{(index .IPAM.Config 0).Gateway}}')
+          poc3b/run.sh --infra-controller "$RUNNER_TEMP/infra-controller" --stub-host "$GW"
+
+      - name: Logs on failure
+        if: failure()
+        run: docker compose -f microcks/docker-compose.yml logs --tail=100
+
+      - name: Stop stack
+        if: always()
+        run: docker compose -f microcks/docker-compose.yml down -v
