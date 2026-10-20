@@ -159,9 +159,10 @@ Full write-up with every command and output: see
   and `reshapr-controllers` both ship this same CRD/operator pattern
   already.
 - Any claim about Omniverse, NIM, NeMo, Base Command, or Spectrum-X.
-- CI — the GitHub Actions workflow runs PoC 3a and PoC 3b stage 1 on
-  `ubuntu-latest` (green on its latest run). It does not cover PoC 3b stage 2,
-  `poc3a/run_real.sh` or PoC 1/2; those are local runs, tested on arm64 only.
+- CI — the GitHub Actions workflow runs PoC 3a, `poc3a/run_real.sh`, PoC 3b
+  stage 1 and PoC 3b stage 2 on `ubuntu-latest` (amd64), with the upstream repos
+  pinned to fixed commits (green on its latest run). It does not cover PoC 1/2,
+  which are local runs, tested on arm64 only.
 
 ## Repo layout
 
@@ -183,7 +184,7 @@ poc3b/
   run.sh, run_poc3b.py                 — stage 1: one-command reproduction (stub backend)
   stage2.sh, run_stage2.py, make_token.py, stage2-config.yaml — stage 2: real local rest-api
   evidence/                            — captured run log and results
-.github/workflows/poc-conformance.yml  — runs PoC 3a and 3b in CI (PoC 3a and 3b stage 1)
+.github/workflows/poc-conformance.yml  — runs PoC 3a and 3b in CI (PoC 3a, 3a real fixtures, 3b stages 1 and 2)
 microcks/
   docker-compose.yml                   — default stack: Microcks uber 1.15.0 + minion + Mosquitto
   mosquitto.conf                       — MQTT broker config (PoC 1)

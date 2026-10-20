@@ -146,9 +146,10 @@ NICo or broker is involved.
 - **Not run against a real broker or a real NICo.** The broker is the local
   Mosquitto from PoC 1. Pointing the same test at a staging NATS/MQTT endpoint
   is the next step and is untested.
-- **CI covers the A-C scenarios only.** The script's exit code is CI-usable and
-  `.github/workflows/poc-conformance.yml` runs it on GitHub (`ubuntu-latest`); the
-  real-fixture replay (`run_real.sh`) is not in CI.
+- **CI.** `.github/workflows/poc-conformance.yml` runs the A-C scenarios and the
+  real-fixture replay (`run_real.sh`, against dsx-exchange pinned to `28c66bf5b`)
+  on GitHub (`ubuntu-latest`). Fixture regeneration (`real/regenerate.sh`, needs
+  Rust) is not in CI.
 - **The Microcks runner validates a window of traffic, not all of it.** It
   subscribes for the timeout (10 s here) and validates what arrives. States that
   are never published in the window are never checked, which is why retained
