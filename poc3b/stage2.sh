@@ -13,6 +13,14 @@ IC=${INFRA_CONTROLLER:-$HERE/../../infra-controller}
 WORK=$HERE/work/s2
 PIDS=$WORK/pids
 
+check_ports() {
+  for port in 8766 8388 35432 7233; do
+    if (exec 3<>"/dev/tcp/127.0.0.1/$port") 2>/dev/null; then
+      echo "port $port is already in use (leftover from an earlier run?): free it and retry" >&2; exit 1
+    fi
+  done
+}
+
 up() {
   mkdir -p "$WORK"
   [ -d .venv ] || { python3 -m venv .venv; .venv/bin/python -m pip install -q pyyaml jsonschema; }
@@ -53,14 +61,20 @@ test_() {
 
 down() {
   [ -f "$PIDS" ] && while read -r p; do kill "$p" 2>/dev/null || true; done < "$PIDS"
+  # on macOS the recorded PID can be a launcher, so also stop whatever still listens on our ports
+  if command -v lsof >/dev/null; then
+    for port in 8766 8388; do
+      { lsof -ti "tcp:$port" -sTCP:LISTEN 2>/dev/null || true; } | while read -r p; do kill "$p" 2>/dev/null || true; done
+    done
+  fi
   docker rm -f s2-pg s2-temporal >/dev/null 2>&1 || true
   rm -rf "$WORK"
 }
 
 case "${1:-all}" in
-  up) up ;;
+  up) check_ports; up ;;
   test) shift; test_ "$@" ;;
   down) down ;;
-  all) trap down EXIT; up; test_ ;;
+  all) check_ports; trap down EXIT; up; test_ ;;
   *) echo "usage: $0 [up|test|down]" >&2; exit 2 ;;
 esac
