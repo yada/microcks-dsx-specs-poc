@@ -1,6 +1,12 @@
 name: microcks-poc
 # Default PoC stack: Microcks "uber" distribution (all-in-one, embedded MongoDB-compatible
 # store, authentication disabled) + its async minion + an MQTT broker.
+# Native images (fast start, small footprint), pinned by digest to a 1.16 nightly build that
+# contains the fixes for microcks/microcks#2374 (gRPC) and #2375 (MQTT tests), which 1.15.0-native
+# lacks. This is a stopgap: pin 1.16.0 here once it is released.
+# The native image has no curl/sh, so there is no container healthcheck; the PoC scripts
+# wait for http://localhost:8080/api/keycloak/config themselves.
+# For the released JVM images (1.15.0) add: -f microcks/docker-compose.jvm.yml
 # State is in-memory: restarting the app container resets it.
 # For the multi-component, Keycloak-secured stack see full/docker-compose.yml.
 services:
@@ -13,7 +19,7 @@ services:
       - "./mosquitto.conf:/mosquitto/config/mosquitto.conf"
 
   app:
-    image: quay.io/microcks/microcks-uber:1.15.0
+    image: quay.io/microcks/microcks-uber:nightly-native@sha256:8b59aa0bb192936a448e5fefff07e20f982196f917ea69a6120ed857bc77275c
     container_name: microcks-poc-app
     ports:
       - "8080:8080"
@@ -21,20 +27,14 @@ services:
     environment:
       - TEST_CALLBACK_URL=http://app:8080
       - ASYNC_MINION_URL=http://async-minion:8081
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8080/api/keycloak/config"]
-      start_period: 5s
-      interval: 5s
-      timeout: 3s
-      retries: 12
 
   async-minion:
-    image: quay.io/microcks/microcks-uber-async-minion:1.15.0
+    image: quay.io/microcks/microcks-uber-async-minion:nightly-native@sha256:d8d9a8f4702b228a7eb201dca80ed70c53a0af752d88277475f3c35da833b771
     container_name: microcks-poc-async-minion
     restart: on-failure
     depends_on:
       app:
-        condition: service_healthy
+        condition: service_started
       mosquitto:
         condition: service_started
     ports:

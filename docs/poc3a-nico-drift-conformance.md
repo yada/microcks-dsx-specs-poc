@@ -15,7 +15,7 @@ only needed for PoC 1's *mocking*).
 ## Run it
 
 ```sh
-docker compose -f microcks/docker-compose.yml up -d     # wait until healthy (secured stack: add `--keycloak http://localhost:18080` to run.sh)
+docker compose -f microcks/docker-compose.yml up -d     # the script waits for Microcks (secured stack: add `--keycloak http://localhost:18080` to run.sh)
 poc3a/run.sh                                            # ~2 minutes
 ```
 
@@ -45,7 +45,7 @@ modified or vendored.
 
 ## Results
 
-Microcks 1.15.0, `dsx-exchange` `16867bd` (pre) / `4e8b71f` (post). Full output:
+Microcks `nightly-native` (digest-pinned, see the README), `dsx-exchange` `16867bd` (pre) / `4e8b71f` (post). Full output:
 [`poc3a/evidence/run.log`](../poc3a/evidence/run.log); per-message data:
 [`poc3a/evidence/results.json`](../poc3a/evidence/results.json).
 

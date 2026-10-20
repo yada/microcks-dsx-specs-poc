@@ -9,8 +9,8 @@ maintains (`schemas/asyncapi/bms/bms.yaml`, `schemas/asyncapi/nico/nico.yaml`).
 
 | Component | Version |
 |---|---|
-| Microcks (uber, all-in-one: app + embedded store, auth disabled) | `quay.io/microcks/microcks-uber:1.15.0` |
-| Microcks async minion (uber) | `quay.io/microcks/microcks-uber-async-minion:1.15.0` |
+| Microcks (uber, all-in-one: app + embedded store, auth disabled) | `quay.io/microcks/microcks-uber:nightly-native` (pinned by digest in the compose file) |
+| Microcks async minion (uber) | `quay.io/microcks/microcks-uber-async-minion:nightly-native` (pinned by digest) |
 | MQTT broker | `eclipse-mosquitto:2` |
 
 Specs tested: `dsx-exchange` commit `484162a` (2026-10-15).
@@ -31,11 +31,16 @@ own MongoDB-compatible store and runs without Keycloak), its async minion
 Mosquitto broker standing in for the MQTT side of dsx-exchange's NATS
 deployment. State is in memory: restarting the app container resets it.
 
-Wait for the app to be healthy (the async minion starts after it):
+Wait for the app to answer (the async minion starts after it; the native image
+has no container healthcheck):
 
 ```sh
+until curl -sf http://localhost:8080/api/keycloak/config >/dev/null; do sleep 1; done
 docker compose -f microcks/docker-compose.yml ps
 ```
+
+To use the released JVM images (1.15.0) instead, add
+`-f microcks/docker-compose.jvm.yml` to the compose command.
 
 ## 2. Authentication
 

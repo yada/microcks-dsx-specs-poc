@@ -37,4 +37,4 @@ states added by #117 (11): decommissioning, reset, bootconfiguring, maintenance,
   [PASS] C: exactly the 3 broken messages fail
   [PASS] Microcks verdicts match offline jsonschema in A, B, C
 
-evidence written to poc3a/evidence/results.json
+evidence written to evidence/results.json

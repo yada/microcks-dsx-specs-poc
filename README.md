@@ -23,7 +23,7 @@ Needs Docker and Python 3, plus local checkouts of `dsx-exchange` and
 ```sh
 git clone https://github.com/dsx-ai-factory/dsx-exchange.git ../dsx-exchange
 git clone https://github.com/dsx-ai-factory/infra-controller.git ../infra-controller
-docker compose -f microcks/docker-compose.yml up -d    # 3 containers, no login
+docker compose -f microcks/docker-compose.yml up -d    # 3 containers (native images), no login
 poc3a/run.sh    # AsyncAPI: replay dsx-exchange#117, expect 6 x [PASS]
 poc3a/run_real.sh # AsyncAPI: NICo-serialized messages vs today's nico.yaml (45/49 conform)
 poc3b/run.sh    # OpenAPI:  replay infra-controller#5459 (one drift), expect 5 x [PASS]
@@ -123,10 +123,10 @@ Microcks half as a test runner:
 
 | | |
 |---|---|
-| **4 / 4** | PoCs verified end-to-end locally on pinned releases (Microcks 1.15.0, reShapr 1.1.0); PoC 3b stage 1 uses a stub backend, stage 2 a real local `rest-api` |
+| **4 / 4** | PoCs verified end-to-end locally (Microcks 1.16 native nightly pinned by digest, reShapr 1.1.0); PoC 3b stage 1 uses a stub backend, stage 2 a real local `rest-api` |
 | **45 / 49** | NICo-serialized messages (real `ManagedHostState` serde output, not schema-derived) that conform to today's `nico.yaml`; the 4 that don't are states missing from the spec |
 | **12 / 26** | NICo messages rejected by the pre-#117 `nico.yaml` in PoC 3a (0 rejected after #117) |
-| **1 / 1** | real `infra-controller` spec drift (#5459, `tpm` array vs object) caught by the OpenAPI test runner in PoC 3b; the post-fix spec is our reconstruction of that one change because #5459 is still open |
+| **1 / 1** | real `infra-controller` spec drift (#5459, `tpm` array vs object) caught by the OpenAPI test runner in PoC 3b, using the real pre- and post-merge commits of #5459 |
 | **37 / 37** | `rest-api` collection endpoints (empty database) that pass Microcks' OpenAPI test against the real server in PoC 3b stage 2; a deliberately drifted spec fails on exactly 1 |
 | **263** | MCP tools generated from `infra-controller`'s real OpenAPI spec (164 paths, 263 operations) in PoC 2 |
 | **3** | spec gaps found in `dsx-exchange`, each closable with a few lines |
@@ -186,7 +186,8 @@ poc3b/
   evidence/                            — captured run log and results
 .github/workflows/poc-conformance.yml  — runs PoC 3a and 3b in CI (PoC 3a, 3a real fixtures, 3b stages 1 and 2)
 microcks/
-  docker-compose.yml                   — default stack: Microcks uber 1.15.0 + minion + Mosquitto
+  docker-compose.yml                   — default stack: Microcks uber (native, 1.16 nightly pinned by digest) + minion + Mosquitto
+  docker-compose.jvm.yml               — optional override: released JVM images (Microcks 1.15.0)
   mosquitto.conf                       — MQTT broker config (PoC 1)
   full/                                — optional multi-component stack with Keycloak
     docker-compose.yml
@@ -230,14 +231,16 @@ Then follow [PoC 1](docs/poc1-dsx-exchange-mqtt.md) and/or
 
 ## Stacks: default and full
 
-The default stack uses Microcks' **uber** distribution: one JVM app with an
+The default stack uses Microcks' **uber** distribution: one app with an
 embedded MongoDB-compatible store, authentication disabled, plus its async
 minion (which reaches the app over WebSocket, so no Kafka) and Mosquitto. The
+app and the minion run as **native images** (see below). The
 original stack is kept in [`microcks/full/`](microcks/full/docker-compose.yml)
 because it is closer to a real deployment: Keycloak-secured API, a real
 MongoDB, Kafka, and the Postman test runner. Use it if you need to see
 authentication, persistent storage, or Postman-based tests. Both stacks
-ran every PoC in this repo successfully.
+ran every PoC in this repo successfully (the full stack was last checked on the
+1.15.0 JVM images).
 
 | | Default (uber) | Full (`microcks/full`) |
 |---|---|---|
@@ -254,13 +257,40 @@ The headline is 3 vs 8 containers and roughly 2-3x less memory. Memory ranges co
 (Docker 29.8.2, arm64, images already pulled); JVM memory varies from run to
 run, so read them as an order of magnitude, not a benchmark. Startup time was
 not meaningfully different (app healthy in about 7-11 s in every case with
-cached images). Only arm64 was tested.
+cached images). Only arm64 was tested. The table's figures were measured on the
+JVM images.
+
+### Native images (default) and the JVM fallback
+
+The default stack runs `microcks-uber` and `microcks-uber-async-minion` as native
+images, pinned by digest to the `nightly-native` build of 2026-10-20 (a 1.16
+nightly). Released `1.15.0-native` is not usable for these PoCs: its MQTT test
+client fails ([microcks/microcks#2375](https://github.com/microcks/microcks/issues/2375)),
+which PoC 3a needs, and its gRPC server fails ([#2374](https://github.com/microcks/microcks/issues/2374)).
+Both are fixed in the nightly. **We will pin Microcks 1.16.0 once it is released**; a
+nightly digest is a stopgap and may stop being pullable.
+
+Measured on one Apple Silicon machine, after running the PoCs (single samples):
+
+| | Native (default) | JVM 1.15.0 |
+|---|---|---|
+| Memory, app + minion | 151 MiB + 92 MiB | 362 MiB + 201 MiB |
+| Stack reachable after `up -d` | ~1 s | ~6 s |
+
+The native image has no `curl` or shell, so the compose file has no container
+healthcheck; the PoC scripts wait for `http://localhost:8080/api/keycloak/config`
+instead. To run the released JVM images:
+
+```sh
+docker compose -f microcks/docker-compose.yml -f microcks/docker-compose.jvm.yml up -d --wait
+```
 
 ## Tested versions
 
 | Component | Version |
 |---|---|
-| Microcks `microcks-uber` + `microcks-uber-async-minion` (default) | `1.15.0` |
+| Microcks `microcks-uber` + `microcks-uber-async-minion` (default) | `nightly-native` @ `sha256:8b59aa0b…` (uber) / `sha256:d8d9a8f4…` (minion), 2026-10-20; pin 1.16.0 when released |
+| Microcks JVM override (`microcks/docker-compose.jvm.yml`) | `1.15.0` |
 | Microcks full stack images (optional, `microcks/full`) | `1.15.0` |
 | reShapr (control plane + gateway) | `1.1.0` |
 | reShapr CLI | `@reshapr/reshapr-cli@1.1.0` |
@@ -294,6 +324,9 @@ anything shared.
   [dsx-ai-factory/infra-controller#7253](https://github.com/dsx-ai-factory/infra-controller/issues/7253).
 - The PoC 2 mock non-determinism (same example name on a 200 and a 401, only
   when the example is defined in the spec) was reported as [microcks/microcks#2373](https://github.com/microcks/microcks/issues/2373).
+  The maintainers explained it as expected behavior: a request example is paired
+  with the response example of the same name, so each response needs its own
+  example name. The APIExamples file used here follows that rule.
 
 ## License
 

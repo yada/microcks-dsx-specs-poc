@@ -1,0 +1,18 @@
+# Optional override: run the released JVM images (Microcks 1.15.0) instead of the
+# default native 1.16 nightly. Slower to start and heavier, but a released version.
+#   docker compose -f microcks/docker-compose.yml -f microcks/docker-compose.jvm.yml up -d --wait
+services:
+  app:
+    image: quay.io/microcks/microcks-uber:1.15.0
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/api/keycloak/config"]
+      start_period: 5s
+      interval: 5s
+      timeout: 3s
+      retries: 12
+
+  async-minion:
+    image: quay.io/microcks/microcks-uber-async-minion:1.15.0
+    depends_on:
+      app:
+        condition: service_healthy

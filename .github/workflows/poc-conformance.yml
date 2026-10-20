@@ -20,7 +20,7 @@ jobs:
           git clone --quiet --filter=blob:none --no-checkout https://github.com/dsx-ai-factory/infra-controller.git "$RUNNER_TEMP/infra-controller"
 
       - name: Start Microcks (default uber stack)
-        run: docker compose -f microcks/docker-compose.yml up -d --wait
+        run: docker compose -f microcks/docker-compose.yml up -d
 
       - name: PoC 3a - AsyncAPI drift (dsx-exchange#117)
         run: poc3a/run.sh --dsx-exchange "$RUNNER_TEMP/dsx-exchange"
@@ -58,7 +58,7 @@ jobs:
           git -C "$RUNNER_TEMP/dsx-exchange" update-ref --no-deref HEAD "$DSX_EXCHANGE_COMMIT"
 
       - name: Start Microcks (default uber stack)
-        run: docker compose -f microcks/docker-compose.yml up -d --wait
+        run: docker compose -f microcks/docker-compose.yml up -d
 
       - name: PoC 3a real fixtures - import APIExamples, minion publishes, test
         run: poc3a/run_real.sh --dsx-exchange "$RUNNER_TEMP/dsx-exchange"
@@ -94,7 +94,7 @@ jobs:
           cache: false
 
       - name: Start Microcks (default uber stack)
-        run: docker compose -f microcks/docker-compose.yml up -d --wait
+        run: docker compose -f microcks/docker-compose.yml up -d
 
       - name: Start the real rest-api
         run: INFRA_CONTROLLER="$RUNNER_TEMP/infra-controller" poc3b/stage2.sh up

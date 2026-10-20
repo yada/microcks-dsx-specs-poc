@@ -10,6 +10,7 @@ if [ ! -d .venv ]; then
   .venv/bin/python -m pip install --quiet pyyaml jsonschema
 fi
 
+for _ in $(seq 60); do curl -sf http://localhost:8080/api/keycloak/config >/dev/null && break; sleep 1; done
 curl -sf http://localhost:8080/api/keycloak/config >/dev/null \
   || { echo "Microcks is not reachable on :8080 - start the stack first" >&2; exit 2; }
 

@@ -5,6 +5,7 @@
 set -euo pipefail
 cd "$(dirname "$0")"
 [ -d .venv ] || { python3 -m venv .venv; .venv/bin/python -m pip install --quiet pyyaml jsonschema; }
+for _ in $(seq 60); do curl -sf http://localhost:8080/api/keycloak/config >/dev/null && break; sleep 1; done
 curl -sf http://localhost:8080/api/keycloak/config >/dev/null \
   || { echo "Microcks is not reachable on :8080 - start the stack first" >&2; exit 2; }
 exec .venv/bin/python run_real.py "$@"

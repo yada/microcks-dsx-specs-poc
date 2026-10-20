@@ -9,7 +9,7 @@ a callable MCP tool, the way an AI agent would consume it.
 
 | Component | Version |
 |---|---|
-| Microcks (uber) | `quay.io/microcks/microcks-uber:1.15.0` (same stack as PoC 1) |
+| Microcks (uber) | `quay.io/microcks/microcks-uber:nightly-native`, pinned by digest (same stack as PoC 1) |
 | reShapr control plane | `registry.reshapr.io/reshapr/reshapr-ctrl:1.1.0` |
 | reShapr gateway/proxy | `registry.reshapr.io/reshapr/reshapr-proxy:1.1.0` |
 | reShapr CLI | `@reshapr/reshapr-cli@1.1.0` |
