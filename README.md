@@ -3,7 +3,7 @@
 Small, locally reproducible proofs-of-concept that generate **mocks**, **MCP
 tools** and **conformance tests** from NVIDIA's DSX API specs, showing where
 [Microcks](https://microcks.io) (API mocking & contract testing) and
-[reShapr](https://reshapr.io) (OpenAPI/GraphQL/gRPC → MCP tool gateway) can
+[reShapr](https://reshapr.io) (OpenAPI/GraphQL/gRPC → MCP tool) can
 plug directly into NVIDIA's [DSX](https://github.com/dsx-ai-factory)
 AI-factory stack — specifically the
 [`dsx-exchange`](https://github.com/dsx-ai-factory/dsx-exchange) event bus and
