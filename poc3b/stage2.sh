@@ -28,7 +28,8 @@ up() {
   docker run -d --name s2-pg -e POSTGRES_USER=nico -e POSTGRES_PASSWORD=nico -e POSTGRES_DB=nico \
     -p 35432:5432 postgres:17-alpine >/dev/null
   docker run -d --name s2-temporal -p 7233:7233 temporalio/temporal:1.9.1 server start-dev --ip 0.0.0.0 >/dev/null
-  for _ in $(seq 30); do docker exec s2-pg pg_isready -U nico >/dev/null 2>&1 && break; sleep 1; done
+  # TCP only: the image's temporary init server listens on the unix socket and then restarts
+  for _ in $(seq 30); do docker exec s2-pg pg_isready -h 127.0.0.1 -U nico >/dev/null 2>&1 && break; sleep 1; done
   docker exec s2-pg psql -U nico -d nico -qc 'CREATE EXTENSION IF NOT EXISTS pg_trgm'
   export PGHOST=localhost PGPORT=35432 PGDATABASE=nico PGUSER=nico PGPASSWORD=nico PGSSLMODE=disable
   "$WORK/migrate" db init >/dev/null && "$WORK/migrate" db migrate >/dev/null
