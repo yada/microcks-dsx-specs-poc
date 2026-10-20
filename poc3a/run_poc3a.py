@@ -214,7 +214,9 @@ def main():
                 "states_added": added, "scenarios": results,
                 "checks": {label: ok for label, ok in checks}}
     (out / "results.json").write_text(json.dumps(evidence, indent=2) + "\n")
-    print(f"\nevidence written to {out.relative_to(Path.cwd()) / 'results.json' if out.is_relative_to(Path.cwd()) else out / 'results.json'}")
+    target = out / "results.json"
+    shown = target.relative_to(Path.cwd()) if target.is_relative_to(Path.cwd()) else target
+    print(f"\nevidence written to {shown}")
     return 0 if all(ok for _, ok in checks) else 1
 
 
