@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
-"""PoC 3a (real fixtures): replay messages serialised by infra-controller's real
+"""PoC 3a (real fixtures): replay messages serialized by infra-controller's real
 ManagedHostState types (examples/nico-real.apiexamples.yaml) through Microcks'
 AsyncAPI test runner against the current dsx-exchange nico.yaml.
 
 Unlike run_poc3a.py, the payloads are not derived from the schema: they come from
-NICo's own serialiser (regenerate with poc3a/real/regenerate.sh). Limits: the set
+NICo's own serializer (regenerate with poc3a/real/regenerate.sh). Limits: the set
 is the states NVIDIA's tests happen to contain, not every reachable state; machine
 ids and timestamps are fixed test values; no live NICo is involved.
 """

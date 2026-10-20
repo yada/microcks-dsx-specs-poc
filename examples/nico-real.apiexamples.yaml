@@ -1,4 +1,4 @@
-# Messages serialised by infra-controller's real ManagedHostState serde types (see poc3a/real/).
+# Messages serialized by infra-controller's real ManagedHostState serde types (see poc3a/real/).
 # machine_id is a zero test id and timestamp is fixed; the state bodies are what NICo emits.
 apiVersion: mocks.microcks.io/v1alpha1
 kind: APIExamples

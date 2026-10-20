@@ -25,7 +25,7 @@ git clone https://github.com/dsx-ai-factory/dsx-exchange.git ../dsx-exchange
 git clone https://github.com/dsx-ai-factory/infra-controller.git ../infra-controller
 docker compose -f microcks/docker-compose.yml up -d    # 3 containers, no login
 poc3a/run.sh    # AsyncAPI: replay dsx-exchange#117, expect 6 x [PASS]
-poc3a/run_real.sh # AsyncAPI: NICo-serialised messages vs today's nico.yaml (45/49 conform)
+poc3a/run_real.sh # AsyncAPI: NICo-serialized messages vs today's nico.yaml (45/49 conform)
 poc3b/run.sh    # OpenAPI:  replay infra-controller#5459 (one drift), expect 5 x [PASS]
 poc3b/stage2.sh # OpenAPI:  same runner vs a real rest-api (needs Go + Docker; a few minutes)
 ```
@@ -124,7 +124,7 @@ Microcks half as a test runner:
 | | |
 |---|---|
 | **4 / 4** | PoCs verified end-to-end locally on pinned releases (Microcks 1.15.0, reShapr 1.1.0); PoC 3b stage 1 uses a stub backend, stage 2 a real local `rest-api` |
-| **45 / 49** | NICo-serialised messages (real `ManagedHostState` serde output, not schema-derived) that conform to today's `nico.yaml`; the 4 that don't are states missing from the spec |
+| **45 / 49** | NICo-serialized messages (real `ManagedHostState` serde output, not schema-derived) that conform to today's `nico.yaml`; the 4 that don't are states missing from the spec |
 | **12 / 26** | NICo messages rejected by the pre-#117 `nico.yaml` in PoC 3a (0 rejected after #117) |
 | **1 / 1** | real `infra-controller` spec drift (#5459, `tpm` array vs object) caught by the OpenAPI test runner in PoC 3b; the post-fix spec is our reconstruction of that one change because #5459 is still open |
 | **37 / 37** | `rest-api` collection endpoints (empty database) that pass Microcks' OpenAPI test against the real server in PoC 3b stage 2; a deliberately drifted spec fails on exactly 1 |
@@ -142,7 +142,7 @@ Full write-up with every command and output: see
 
 - **Contract/conformance testing against a live backend** — PoC 3a runs
   Microcks' test runner against a local Mosquitto broker fed with
-  schema-derived messages (plus 49 messages serialised by NICo's own types, replayed
+  schema-derived messages (plus 49 messages serialized by NICo's own types, replayed
   the same way), and PoC 3b against a stub HTTP backend replaying
   one drift. Neither uses a real NICo, a real DSX broker or a real
   `rest-api` with data: PoC 3b stage 2 runs against a real `rest-api` but with
@@ -177,7 +177,7 @@ docs/
   notes-core-mock-comparison.md        — manual spike: Microcks vs mock-core (not scripted)
 poc3a/
   run.sh, run_poc3a.py, gen_payloads.py — one-command reproduction (schema-derived traffic)
-  run_real.sh, run_real.py, real/        — replay of NICo-serialised messages; real/ regenerates the fixture
+  run_real.sh, run_real.py, real/        — replay of NICo-serialized messages; real/ regenerates the fixture
   evidence/                            — captured run log and per-message results
 poc3b/
   run.sh, run_poc3b.py                 — stage 1: one-command reproduction (stub backend)
@@ -301,7 +301,7 @@ anything shared.
 ### Third-party material
 
 `examples/*.apiexamples.yaml` and `poc3a/evidence/real.*` contain payload
-shapes derived from, or serialised by, NVIDIA's
+shapes derived from, or serialized by, NVIDIA's
 [`dsx-exchange`](https://github.com/dsx-ai-factory/dsx-exchange) and
 [`infra-controller`](https://github.com/dsx-ai-factory/infra-controller) (both
 Apache-2.0). The specs themselves are not copied; scripts read them from a

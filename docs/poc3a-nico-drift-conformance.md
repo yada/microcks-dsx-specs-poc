@@ -91,7 +91,7 @@ offline jsonschema verdicts in A, B and C" (every message, every scenario).
   scenario).
 - Both specs imported as-is; the async-minion had 0 restarts.
 
-## Real fixtures: messages serialised by NICo's own types
+## Real fixtures: messages serialized by NICo's own types
 
 The scenarios above use schema-derived payloads. `poc3a/run_real.sh` replays
 messages that come from `infra-controller`'s real `ManagedHostState` serde
@@ -103,8 +103,8 @@ How they are made (`poc3a/real/regenerate.sh`, needs Rust and `protoc`):
 `extract_samples.py` harvests the `ManagedHostState` JSON snippets that
 NVIDIA's own tests and docs contain (71 candidates); a small Rust example
 (`dump_states.rs`, run in a throw-away git worktree so the checkout is not
-modified) deserialises each with the real types, which rejects the 18 that are
-stale or deliberately bogus, and re-serialises the 53 accepted ones inside a
+modified) deserializes each with the real types, which rejects the 18 that are
+stale or deliberately bogus, and re-serializes the 53 accepted ones inside a
 copy of the `ManagedHostStateMessage` struct from
 `api-core/src/mqtt_state_change_hook/message.rs`. `machine_id` is a zero test
 id and `timestamp` is fixed.
@@ -126,7 +126,7 @@ on every message:
 
 None of those four state names appears in `nico.yaml`, while the code defines
 them. This is a finding about spec coverage, not yet a confirmed bug: the
-fixture shows the serialiser can emit them, not that production NICo emits them
+fixture shows the serializer can emit them, not that production NICo emits them
 today. It is the kind of gap #118 proposes to catch automatically, and it is
 worth asking the maintainers whether `nico.yaml` is meant to be exhaustive.
 

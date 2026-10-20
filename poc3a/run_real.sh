@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# PoC 3a (real fixtures): import nico.yaml and the NICo-serialised APIExamples
+# PoC 3a (real fixtures): import nico.yaml and the NICo-serialized APIExamples
 # (examples/nico-real.apiexamples.yaml) into Microcks; its minion publishes them and an
 # ASYNC_API_SCHEMA test validates them against the current dsx-exchange nico.yaml. Needs the default stack and a ../dsx-exchange checkout.
 set -euo pipefail

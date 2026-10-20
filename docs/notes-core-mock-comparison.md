@@ -52,7 +52,7 @@ files in that shape and importing via `POST /api/artifact/download` worked.
 
 ## Statefulness spike (measured, Microcks 1.15.0)
 
-First measured on the full stack, then repeated on the default uber JVM stack. The scripted behaviour (first four rows) is identical on both; storage-related behaviour (last three rows) differs and is shown per stack.
+First measured on the full stack, then repeated on the default uber JVM stack. The scripted behavior (first four rows) is identical on both; storage-related behavior (last three rows) differs and is shown per stack.
 
 Setup: the real Core proto imported as a gRPC service, one example for
 `CreateVpc` (`created`), two for `FindVpcIds` (`empty`, `one`), and an

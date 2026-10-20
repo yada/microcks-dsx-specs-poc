@@ -12,7 +12,8 @@ then asks Microcks' OpenAPITestRunner (OPEN_API_SCHEMA) to check `GET /sku/{skuI
 against both specs. Once #5459 merges, use its merge commit and drop apply_tpm_fix().
 
 The backend is a stub, not a real rest-api: it proves the runner catches this class
-of drift, not that the real server conforms. Stage 2 (real rest-api) is not built.
+of drift, not that the real server conforms. Stage 2 (run_stage2.py) runs the same
+runner against a real local rest-api.
 """
 import argparse
 import copy

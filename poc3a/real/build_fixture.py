@@ -23,7 +23,7 @@ for p in rows:
 doc = {"apiVersion": "mocks.microcks.io/v1alpha1", "kind": "APIExamples",
        "metadata": {"name": "NICo Managed Host State Event Bus", "version": "1.0.0"},
        "operations": {"RECEIVE subscribeManagedHostStateChange": examples}}
-header = ("# Messages serialised by infra-controller's real ManagedHostState serde types (see poc3a/real/).\n"
+header = ("# Messages serialized by infra-controller's real ManagedHostState serde types (see poc3a/real/).\n"
           "# machine_id is a zero test id and timestamp is fixed; the state bodies are what NICo emits.\n")
 open(sys.argv[2], "w").write(header + yaml.safe_dump(doc, sort_keys=False, width=200))
 print(f"{len(examples)} unique messages -> {sys.argv[2]}")
