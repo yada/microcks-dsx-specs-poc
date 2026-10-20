@@ -19,17 +19,20 @@ This replaces two edits this repo used to describe:
 
 1. An `examples:` block on the `org` parameter. Replaced by the APIExamples file.
 2. Removing the shared `401` response from that operation. That was a
-   workaround for [microcks/microcks#2373](https://github.com/microcks/microcks/issues/2373):
-   the `200` and the shared `UnauthorizedError` both named their example
-   `example-1`, got the same dispatch key, and the mock flipped between 200
-   and 401. With an APIExamples example named differently, 30 of 30 requests
-   returned 200 over 3 wipes of Microcks 1.15.0. We did not establish why;
-   #2373's flip is non-deterministic, so this is an observation, not a fix of
-   the bug.
+   workaround for [microcks/microcks#2373](https://github.com/microcks/microcks/issues/2373).
+   Microcks pairs a request example with the response example of the **same
+   name**. The spec's `200` and the shared `UnauthorizedError` both named their
+   example `example-1`, so both got the same dispatch criteria and the mock
+   could answer either one. The maintainers describe this as the expected,
+   documented behavior: give each response its own example name. The APIExamples
+   file does exactly that (`poc-metadata` pairs only with the `200`), and 30 of
+   30 requests returned 200 over 3 wipes of Microcks 1.15.0. A spec using
+   distinct names per response (`example-1` for the `200`, `example-2` for the
+   `401`) was deterministic too, on 1.15.0 and on a 1.16 nightly.
 
 If you would rather change the spec, adding `examples: {example-1: {value: test-org-1}}`
 to the `org` parameter (declared at path-item level, as for all 164 paths)
-works too, but then the #2373 collision applies again.
+works too, but then the shared `401` must use a different example name.
 
 > **Note on path-item-level `parameters:`:** this spec declares path
 > parameters as a sibling of the HTTP verb, shared by every verb on the path

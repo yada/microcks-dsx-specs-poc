@@ -8,7 +8,7 @@ Microcks' OpenAPI test runner have caught one of them automatically?
 **Answer (stage 1, stub backend):** yes, for the one drift replayed here. One
 of the 14 defects: `SkuComponents.tpm` was documented as an **array** while
 the server returns a single **object**. Against the spec from before the fix,
-Microcks fails the test; against the same spec with that one change applied, it passes. Same
+Microcks fails the test; against the spec from the #5459 merge commit, which documents a single object or null, it passes. Same
 traffic, same runner, no custom validation code in the runner's path.
 
 ## Stage 2 — the same runner against a real `rest-api`
@@ -51,7 +51,7 @@ response examples, removed `401`s); APIExamples made all of that unnecessary.
 ## Run it (stage 1, stub backend)
 
 ```sh
-docker compose -f microcks/docker-compose.yml up -d     # wait until healthy
+docker compose -f microcks/docker-compose.yml up -d     # the scripts wait for Microcks
 poc3b/run.sh                                            # ~1 minute
 ```
 
@@ -62,15 +62,11 @@ Nothing in `infra-controller` is modified or vendored.
 
 ## What it does
 
-1. Reads `rest-api/openapi/spec.yaml` at `d4cc7e1c2` (on `main`, just before the
-   #5459 PR) and derives the post-fix spec by applying only the `tpm` change
-   (`apply_tpm_fix()` in `run_poc3b.py`).
-
-   > **Reconstruction, not NVIDIA's commit.** #5459 is still open and its branch
-   > has been force-pushed, so its commits cannot be pinned (the original pin,
-   > `5eed3849e`, disappeared and broke a fresh clone). The post-fix spec here is
-   > our re-application of that one defect's fix. When #5459 merges, this should
-   > switch to the merge commit and its parent, and `apply_tpm_fix()` goes away.
+1. Reads `rest-api/openapi/spec.yaml` at two pinned commits on `main`: `2be14c92a`
+   (pre-fix, the parent of the #5459 merge) and `d7f4bf933` (post-fix, the #5459
+   merge commit). Both are read with `git show`. The merge commit changes more
+   than the `tpm` property; this replay checks the one operation that exposes
+   the `tpm` drift.
 2. Keeps only `GET /v2/org/{org}/nico/sku/{skuId}` and sets `info.version`
    to `pre-fix-5459` / `post-fix-5459` so both revisions exist side by side.
    Schemas are untouched. The `org` and `skuId` request values Microcks needs
@@ -85,7 +81,7 @@ Nothing in `infra-controller` is modified or vendored.
 
 ## Results
 
-Microcks 1.15.0, `infra-controller` `d4cc7e1c2` (pre) / reconstructed `tpm` fix (post), run from a fresh blobless clone.
+Microcks `nightly-native` (digest-pinned), `infra-controller` `2be14c92a` (pre) / `d7f4bf933` (post, the #5459 merge commit), run from a fresh blobless clone.
 Full output: [`poc3b/evidence/run.log`](../poc3b/evidence/run.log); structured
 data: [`poc3b/evidence/results.json`](../poc3b/evidence/results.json).
 
@@ -101,8 +97,8 @@ offline check is what pins it to `components/tpm`.
 ## Limits — read before citing this
 
 - **Stage 1's backend is a stub, not a real `rest-api`.** The payload is the spec's
-  own example with `tpm` reshaped to what #5459's description says the server
-  returns. This proves the runner catches this class of drift. It does **not**
+  own example with `tpm` reshaped to a single object, which is what the
+  merged spec documents. This proves the runner catches this class of drift. It does **not**
   show that the real server conforms to today's spec. Stage 2 (above) does
   run against a real `rest-api`, but with an empty database.
 - **One drift of the 14, one operation.** The other defects (status enums such

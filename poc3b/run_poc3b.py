@@ -1,15 +1,15 @@
 #!/usr/bin/env python3
 """PoC 3b (stage 1): replay infra-controller's spec-drift fix as a Microcks REST conformance test.
 
-PR #5459 ("Resolve differences between REST API models & OpenAPI schema", still open
-and force-pushed, so none of its commits can be pinned) fixes spec defects found by a
-manual audit. One of them: `SkuComponents.tpm` was documented as an array while the
-server returns a single object. The pre-fix spec is the real one on `main` just before
-the PR (BASE_COMMIT). The post-fix spec is that same spec with only the tpm change
-applied by `apply_tpm_fix()`: a reconstruction of that one defect, not NVIDIA's commit.
+PR #5459 ("Resolve differences between REST API models & OpenAPI schema", merged on
+2026-10-20 as one commit) fixes spec defects found by a manual audit. One of them:
+`SkuComponents.tpm` was documented as an array while the server returns a single
+object (or null). The pre-fix spec is `rest-api/openapi/spec.yaml` at the merge
+commit's parent (BASE_COMMIT) and the post-fix spec is the one at the merge commit
+(FIX_COMMIT), both read with `git show` from a checkout.
 This script serves a stub backend that returns the real wire shape (tpm as an object),
 then asks Microcks' OpenAPITestRunner (OPEN_API_SCHEMA) to check `GET /sku/{skuId}`
-against both specs. Once #5459 merges, use its merge commit and drop apply_tpm_fix().
+against both specs.
 
 The backend is a stub, not a real rest-api: it proves the runner catches this class
 of drift, not that the real server conforms. Stage 2 (run_stage2.py) runs the same
@@ -30,7 +30,8 @@ from pathlib import Path
 import jsonschema
 import yaml
 
-BASE_COMMIT = "d4cc7e1c2"  # on main, parent of the first #5459 commit
+BASE_COMMIT = "2be14c92a"  # parent of the #5459 merge commit, on main
+FIX_COMMIT = "d7f4bf933"  # #5459 merge commit, on main
 SPEC_PATH = "rest-api/openapi/spec.yaml"
 SKU_PATH = "/v2/org/{org}/nico/sku/{skuId}"
 OPERATION = "GET " + SKU_PATH
@@ -44,16 +45,6 @@ def sh(cmd):
 
 def load_spec(repo, ref):
     return yaml.safe_load(sh(["git", "-C", repo, "show", f"{ref}:{SPEC_PATH}"]))
-
-
-def apply_tpm_fix(spec):
-    """Reconstruction of the #5459 tpm change: array of SkuTpm -> single SkuTpm."""
-    spec = copy.deepcopy(spec)
-    tpm = spec["components"]["schemas"]["SkuComponents"]["properties"]["tpm"]
-    assert tpm["type"] == "array", "base spec no longer has the tpm drift"
-    spec["components"]["schemas"]["SkuComponents"]["properties"]["tpm"] = {
-        "$ref": "#/components/schemas/SkuTpm", "description": "TPM component"}
-    return spec
 
 
 def prepare(spec, version):
@@ -185,7 +176,7 @@ def main():
     a = ap.parse_args()
 
     pre = load_spec(a.infra_controller, BASE_COMMIT)
-    post = apply_tpm_fix(pre)
+    post = load_spec(a.infra_controller, FIX_COMMIT)
     Stub.payload = json.dumps(wire_payload(post)).encode()
     srv = ThreadingHTTPServer(("0.0.0.0", a.stub_port), Stub)
     threading.Thread(target=srv.serve_forever, daemon=True).start()
@@ -227,7 +218,7 @@ def main():
     evidence = here / "evidence"
     evidence.mkdir(exist_ok=True)
     (evidence / "results.json").write_text(json.dumps(
-        {"base_commit": BASE_COMMIT, "post_fix": "reconstructed tpm change (see run_poc3b.py)", "operation": OPERATION, "results": results,
+        {"base_commit": BASE_COMMIT, "fix_commit": FIX_COMMIT, "operation": OPERATION, "results": results,
          "checks": {n: ok for n, ok in checks}}, indent=2) + "\n")
     srv.shutdown()
     sys.exit(0 if all(ok for _, ok in checks) else 1)

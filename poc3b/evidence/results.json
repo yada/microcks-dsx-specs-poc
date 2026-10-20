@@ -1,6 +1,6 @@
 {
-  "base_commit": "d4cc7e1c2",
-  "post_fix": "reconstructed tpm change (see run_poc3b.py)",
+  "base_commit": "2be14c92a",
+  "fix_commit": "d7f4bf933",
   "operation": "GET /v2/org/{org}/nico/sku/{skuId}",
   "results": {
     "pre-fix": {
