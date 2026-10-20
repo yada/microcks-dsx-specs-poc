@@ -39,3 +39,79 @@ jobs:
       - name: Stop stack
         if: always()
         run: docker compose -f microcks/docker-compose.yml down -v
+
+  # Replays the 49 NICo-serialized messages (examples/nico-real.apiexamples.yaml)
+  # published by Microcks' minion against nico.yaml at a pinned dsx-exchange commit.
+  poc3a-real:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      DSX_EXCHANGE_COMMIT: 28c66bf5b
+    steps:
+      - uses: actions/checkout@v4
+
+      # HEAD is pointed at the pinned commit without checking files out:
+      # the script only reads it through `git show`.
+      - name: Clone dsx-exchange at the pinned commit
+        run: |
+          git clone --quiet --filter=blob:none --no-checkout https://github.com/dsx-ai-factory/dsx-exchange.git "$RUNNER_TEMP/dsx-exchange"
+          git -C "$RUNNER_TEMP/dsx-exchange" update-ref --no-deref HEAD "$DSX_EXCHANGE_COMMIT"
+
+      - name: Start Microcks (default uber stack)
+        run: docker compose -f microcks/docker-compose.yml up -d --wait
+
+      - name: PoC 3a real fixtures - import APIExamples, minion publishes, test
+        run: poc3a/run_real.sh --dsx-exchange "$RUNNER_TEMP/dsx-exchange"
+
+      - name: Logs on failure
+        if: failure()
+        run: docker compose -f microcks/docker-compose.yml logs --tail=100
+
+      - name: Stop stack
+        if: always()
+        run: docker compose -f microcks/docker-compose.yml down -v
+
+  # Microcks' OpenAPI runner against a real rest-api (Postgres + Temporal dev
+  # server + the API binary built from the pinned commit). Empty database.
+  poc3b-stage2:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      INFRA_CONTROLLER_COMMIT: ee29e315f
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Clone infra-controller (rest-api only) at the pinned commit
+        run: |
+          git clone --quiet --filter=blob:none --no-checkout https://github.com/dsx-ai-factory/infra-controller.git "$RUNNER_TEMP/infra-controller"
+          git -C "$RUNNER_TEMP/infra-controller" sparse-checkout set rest-api
+          git -C "$RUNNER_TEMP/infra-controller" checkout --quiet --detach "$INFRA_CONTROLLER_COMMIT"
+
+      - uses: actions/setup-go@v5
+        with:
+          go-version-file: ${{ runner.temp }}/infra-controller/rest-api/go.mod
+
+      - name: Start Microcks (default uber stack)
+        run: docker compose -f microcks/docker-compose.yml up -d --wait
+
+      - name: Start the real rest-api
+        run: INFRA_CONTROLLER="$RUNNER_TEMP/infra-controller" poc3b/stage2.sh up
+
+      # On Linux there is no host.docker.internal; the API is reached through
+      # the compose network's gateway.
+      - name: PoC 3b stage 2 - Microcks OpenAPI test against the real rest-api
+        run: |
+          GW=$(docker network inspect microcks-poc_default --format '{{(index .IPAM.Config 0).Gateway}}')
+          INFRA_CONTROLLER="$RUNNER_TEMP/infra-controller" poc3b/stage2.sh test --api-from-microcks "http://$GW:8388"
+
+      - name: Logs on failure
+        if: failure()
+        run: |
+          docker compose -f microcks/docker-compose.yml logs --tail=100
+          tail -50 poc3b/work/s2/api.log || true
+
+      - name: Tear down
+        if: always()
+        run: |
+          poc3b/stage2.sh down
+          docker compose -f microcks/docker-compose.yml down -v
