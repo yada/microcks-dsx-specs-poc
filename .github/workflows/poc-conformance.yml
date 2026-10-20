@@ -19,7 +19,7 @@ jobs:
           git clone --quiet --filter=blob:none --no-checkout https://github.com/dsx-ai-factory/dsx-exchange.git "$RUNNER_TEMP/dsx-exchange"
           git clone --quiet --filter=blob:none --no-checkout https://github.com/dsx-ai-factory/infra-controller.git "$RUNNER_TEMP/infra-controller"
 
-      - name: Start Microcks (default uber stack)
+      - name: Start Microcks (default native uber stack)
         run: docker compose -f microcks/docker-compose.yml up -d
 
       - name: PoC 3a - AsyncAPI drift (dsx-exchange#117)
@@ -57,7 +57,7 @@ jobs:
           git clone --quiet --filter=blob:none --no-checkout https://github.com/dsx-ai-factory/dsx-exchange.git "$RUNNER_TEMP/dsx-exchange"
           git -C "$RUNNER_TEMP/dsx-exchange" update-ref --no-deref HEAD "$DSX_EXCHANGE_COMMIT"
 
-      - name: Start Microcks (default uber stack)
+      - name: Start Microcks (default native uber stack)
         run: docker compose -f microcks/docker-compose.yml up -d
 
       - name: PoC 3a real fixtures - import APIExamples, minion publishes, test
@@ -93,7 +93,7 @@ jobs:
           go-version-file: ${{ runner.temp }}/infra-controller/rest-api/go.mod
           cache: false
 
-      - name: Start Microcks (default uber stack)
+      - name: Start Microcks (default native uber stack)
         run: docker compose -f microcks/docker-compose.yml up -d
 
       - name: Start the real rest-api
