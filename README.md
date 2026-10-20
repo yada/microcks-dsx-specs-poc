@@ -160,7 +160,7 @@ Full write-up with every command and output: see
   already.
 - Any claim about Omniverse, NIM, NeMo, Base Command, or Spectrum-X.
 - CI — the GitHub Actions workflow runs PoC 3a, `poc3a/run_real.sh`, PoC 3b
-  stage 1 and PoC 3b stage 2 on `ubuntu-latest` (amd64), with the upstream repos
+  stage 1 and PoC 3b stage 2 on `ubuntu-26.04` (amd64), with the upstream repos
   pinned to fixed commits (green on its latest run). It does not cover PoC 1/2,
   which are local runs, tested on arm64 only.
 

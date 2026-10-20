@@ -7,10 +7,10 @@ on:
 
 jobs:
   poc3:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04
     timeout-minutes: 20
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
       # The scripts only read fixed commits through `git show`, so blobless
       # clones are enough and keep the 240 MB infra-controller repo cheap.
@@ -43,12 +43,12 @@ jobs:
   # Replays the 49 NICo-serialized messages (examples/nico-real.apiexamples.yaml)
   # published by Microcks' minion against nico.yaml at a pinned dsx-exchange commit.
   poc3a-real:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04
     timeout-minutes: 20
     env:
       DSX_EXCHANGE_COMMIT: 28c66bf5b
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
       # HEAD is pointed at the pinned commit without checking files out:
       # the script only reads it through `git show`.
@@ -74,12 +74,12 @@ jobs:
   # Microcks' OpenAPI runner against a real rest-api (Postgres + Temporal dev
   # server + the API binary built from the pinned commit). Empty database.
   poc3b-stage2:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04
     timeout-minutes: 30
     env:
       INFRA_CONTROLLER_COMMIT: ee29e315f
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
       - name: Clone infra-controller (rest-api only) at the pinned commit
         run: |
@@ -87,9 +87,11 @@ jobs:
           git -C "$RUNNER_TEMP/infra-controller" sparse-checkout set rest-api
           git -C "$RUNNER_TEMP/infra-controller" checkout --quiet --detach "$INFRA_CONTROLLER_COMMIT"
 
-      - uses: actions/setup-go@v5
+      # No cache: go.sum lives in the cloned repo, not in this one.
+      - uses: actions/setup-go@v6
         with:
           go-version-file: ${{ runner.temp }}/infra-controller/rest-api/go.mod
+          cache: false
 
       - name: Start Microcks (default uber stack)
         run: docker compose -f microcks/docker-compose.yml up -d --wait

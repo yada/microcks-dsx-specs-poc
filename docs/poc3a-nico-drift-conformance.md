@@ -148,7 +148,7 @@ NICo or broker is involved.
   is the next step and is untested.
 - **CI.** `.github/workflows/poc-conformance.yml` runs the A-C scenarios and the
   real-fixture replay (`run_real.sh`, against dsx-exchange pinned to `28c66bf5b`)
-  on GitHub (`ubuntu-latest`). Fixture regeneration (`real/regenerate.sh`, needs
+  on GitHub (`ubuntu-26.04`). Fixture regeneration (`real/regenerate.sh`, needs
   Rust) is not in CI.
 - **The Microcks runner validates a window of traffic, not all of it.** It
   subscribes for the timeout (10 s here) and validates what arrives. States that

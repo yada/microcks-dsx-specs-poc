@@ -112,4 +112,4 @@ offline check is what pins it to `components/tpm`.
   responses are dropped, to keep the test focused. The full 164-path spec
   imports as well (PoC 2), but its examples would also need a backend that
   serves each one.
-- **CI.** `.github/workflows/poc-conformance.yml` runs stage 1 and stage 2 on GitHub (`ubuntu-latest`, infra-controller pinned to `ee29e315f`). On Linux the API is reached through the compose network's gateway instead of `host.docker.internal`.
+- **CI.** `.github/workflows/poc-conformance.yml` runs stage 1 and stage 2 on GitHub (`ubuntu-26.04`, infra-controller pinned to `ee29e315f`). On Linux the API is reached through the compose network's gateway instead of `host.docker.internal`.
