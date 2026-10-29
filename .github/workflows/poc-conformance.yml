@@ -77,7 +77,7 @@ jobs:
     runs-on: ubuntu-26.04
     timeout-minutes: 30
     env:
-      INFRA_CONTROLLER_COMMIT: ee29e315f
+      INFRA_CONTROLLER_COMMIT: 5207e5a67
     steps:
       - uses: actions/checkout@v6
 

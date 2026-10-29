@@ -3,7 +3,9 @@ name: microcks-poc
 # store, authentication disabled) + its async minion + an MQTT broker.
 # Native images (fast start, small footprint), pinned by digest to a 1.16 nightly build that
 # contains the fixes for microcks/microcks#2374 (gRPC) and #2375 (MQTT tests), which 1.15.0-native
-# lacks. This is a stopgap: pin 1.16.0 here once it is released.
+# lacks. This is a stopgap: pin 1.16.0 here once it is released. Nightly digests do get
+# garbage-collected (the 2026-10-20 ones were gone after 9 days), so if the pull fails,
+# repin to the current `nightly-native` index digest or use the JVM override below.
 # The native image has no curl/sh, so there is no container healthcheck; the PoC scripts
 # wait for http://localhost:8080/api/keycloak/config themselves.
 # For the released JVM images (1.15.0) add: -f microcks/docker-compose.jvm.yml
@@ -19,7 +21,7 @@ services:
       - "./mosquitto.conf:/mosquitto/config/mosquitto.conf"
 
   app:
-    image: quay.io/microcks/microcks-uber:nightly-native@sha256:8b59aa0bb192936a448e5fefff07e20f982196f917ea69a6120ed857bc77275c
+    image: quay.io/microcks/microcks-uber:nightly-native@sha256:84133a6b6eef265fa8a8f877405794c12d8fa4d6788384a35be96361e46aec06
     container_name: microcks-poc-app
     ports:
       - "8080:8080"
@@ -29,7 +31,7 @@ services:
       - ASYNC_MINION_URL=http://async-minion:8081
 
   async-minion:
-    image: quay.io/microcks/microcks-uber-async-minion:nightly-native@sha256:d8d9a8f4702b228a7eb201dca80ed70c53a0af752d88277475f3c35da833b771
+    image: quay.io/microcks/microcks-uber-async-minion:nightly-native@sha256:097aa478ce6106e8e13cea8d67c3819d3d14e01baea4ca1fde92f5a29d88b0e3
     container_name: microcks-poc-async-minion
     restart: on-failure
     depends_on:

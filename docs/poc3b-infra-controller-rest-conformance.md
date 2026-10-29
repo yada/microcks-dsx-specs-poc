@@ -22,7 +22,7 @@ custom JWT issuer; no Kind, no Core, no registered site) and points Microcks'
 poc3b/stage2.sh         # up + test + down, a few minutes; needs Docker, Go, the Microcks stack
 ```
 
-Result, `infra-controller` at `ee29e315f` (log: `poc3b/evidence/stage2.log`):
+Result, `infra-controller` at `5207e5a67` (log: `poc3b/evidence/stage2.log`):
 
 - 57 collection `GET` endpoints have only the `org` path parameter. 37 answer
   `200` on the real server with an empty database; 20 answer `400`/`403`
@@ -108,4 +108,4 @@ offline check is what pins it to `components/tpm`.
   responses are dropped, to keep the test focused. The full 164-path spec
   imports as well (PoC 2), but its examples would also need a backend that
   serves each one.
-- **CI.** `.github/workflows/poc-conformance.yml` runs stage 1 and stage 2 on GitHub (`ubuntu-26.04`, infra-controller pinned to `ee29e315f`). On Linux the API is reached through the compose network's gateway instead of `host.docker.internal`.
+- **CI.** `.github/workflows/poc-conformance.yml` runs stage 1 and stage 2 on GitHub (`ubuntu-26.04`, infra-controller pinned to `5207e5a67`). On Linux the API is reached through the compose network's gateway instead of `host.docker.internal`.

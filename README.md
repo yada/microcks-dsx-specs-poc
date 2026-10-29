@@ -128,7 +128,7 @@ Microcks half as a test runner:
 | **12 / 26** | NICo messages rejected by the pre-#117 `nico.yaml` in PoC 3a (0 rejected after #117) |
 | **1 / 1** | real `infra-controller` spec drift (#5459, `tpm` array vs object) caught by the OpenAPI test runner in PoC 3b, using the real pre- and post-merge commits of #5459 |
 | **37 / 37** | `rest-api` collection endpoints (empty database) that pass Microcks' OpenAPI test against the real server in PoC 3b stage 2; a deliberately drifted spec fails on exactly 1 |
-| **263** | MCP tools generated from `infra-controller`'s real OpenAPI spec (164 paths, 263 operations) in PoC 2 |
+| **265** | MCP tools generated from `infra-controller`'s real OpenAPI spec (165 paths, 265 operations at `5207e5a67`, 2026-10-29; it was 164 / 263 on 2026-10-20) in PoC 2 |
 | **3** | spec gaps found in `dsx-exchange`, each closable with a few lines |
 | **0** | results without a captured command output or evidence file in this repo (scope and limits are listed per PoC) |
 
@@ -263,12 +263,13 @@ JVM images.
 ### Native images (default) and the JVM fallback
 
 The default stack runs `microcks-uber` and `microcks-uber-async-minion` as native
-images, pinned by digest to the `nightly-native` build of 2026-10-20 (a 1.16
+images, pinned by digest to the `nightly-native` build of 2026-10-22 (a 1.16
 nightly). Released `1.15.0-native` is not usable for these PoCs: its MQTT test
 client fails ([microcks/microcks#2375](https://github.com/microcks/microcks/issues/2375)),
 which PoC 3a needs, and its gRPC server fails ([#2374](https://github.com/microcks/microcks/issues/2374)).
 Both are fixed in the nightly. **We will pin Microcks 1.16.0 once it is released**; a
-nightly digest is a stopgap and may stop being pullable.
+nightly digest is a stopgap: the first pin (2026-10-20) was no longer pullable after
+9 days and had to be replaced.
 
 Measured on one Apple Silicon machine, after running the PoCs (single samples):
 
@@ -289,7 +290,7 @@ docker compose -f microcks/docker-compose.yml -f microcks/docker-compose.jvm.yml
 
 | Component | Version |
 |---|---|
-| Microcks `microcks-uber` + `microcks-uber-async-minion` (default) | `nightly-native` @ `sha256:8b59aa0b…` (uber) / `sha256:d8d9a8f4…` (minion), 2026-10-20; pin 1.16.0 when released |
+| Microcks `microcks-uber` + `microcks-uber-async-minion` (default) | `nightly-native` @ `sha256:84133a6b…` (uber) / `sha256:097aa478…` (minion), 2026-10-22; pin 1.16.0 when released |
 | Microcks JVM override (`microcks/docker-compose.jvm.yml`) | `1.15.0` |
 | Microcks full stack images (optional, `microcks/full`) | `1.15.0` |
 | reShapr (control plane + gateway) | `1.1.0` |

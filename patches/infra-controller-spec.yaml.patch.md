@@ -1,9 +1,9 @@
 # Notes — `infra-controller/rest-api/openapi/spec.yaml`
 
-This repo does **not** vendor NVIDIA's `spec.yaml` (1.3 MB, 164 paths). The
+This repo does **not** vendor NVIDIA's `spec.yaml` (1.3 MB, 165 paths). The
 file already has a response example on every schema and imports into Microcks
-**unmodified**. Verified against `infra-controller` commits `02b92f18f` and
-`ee29e315f`.
+**unmodified**. Verified against `infra-controller` commits `02b92f18f`,
+`ee29e315f` and `5207e5a67`.
 
 ## No edit needed: use the APIExamples file
 

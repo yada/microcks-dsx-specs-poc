@@ -1,5 +1,5 @@
 {
-  "infra_controller_commit": "ee29e315f",
+  "infra_controller_commit": "5207e5a67",
   "endpoints_tested": 37,
   "endpoints_skipped": {
     "/v2/org/{org}/nico/tenant/current/routing-profile": 400,

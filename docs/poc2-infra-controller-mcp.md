@@ -18,7 +18,7 @@ a callable MCP tool, the way an AI agent would consume it.
 Spec tested: `infra-controller` commit `02b92f18f` (2026-10-17).
 
 > An NPE bug affecting any OpenAPI spec that declares path parameters at the
-> path-item level (infra-controller's own convention, used on all 164 of its
+> path-item level (infra-controller's own convention, used on all of its
 > paths) was fixed in
 > [reshaprio/reshapr#545](https://github.com/reshaprio/reshapr/issues/545)
 > and ships in reShapr 1.1.0 (released 2026-10-15).
@@ -141,10 +141,11 @@ gateway and handed back in MCP's own response envelope.
 
 ## What this proves
 
-- Microcks mocks infra-controller's real OpenAPI spec (164 paths, 263
-  operations) with no edit to the spec; one APIExamples file provides the
+- Microcks mocks infra-controller's real OpenAPI spec (165 paths, 265
+  operations at `5207e5a67`, 2026-10-29; the counts follow upstream, they were
+  164 / 263 on 2026-10-20) with no edit to the spec; one APIExamples file provides the
   `org` request example ([notes](../patches/infra-controller-spec.yaml.patch.md)).
-- reShapr turns the spec into 263 MCP tools. The one endpoint with an APIExamples entry
+- reShapr turns the spec into 265 MCP tools. The one endpoint with an APIExamples entry
   (`get_v2_org_org_nico_metadata`) is backed by a real mock and callable — the full chain
   **spec → Microcks mock → reShapr MCP tool → MCP client call** works
   end-to-end against infra-controller's actual API shape.
