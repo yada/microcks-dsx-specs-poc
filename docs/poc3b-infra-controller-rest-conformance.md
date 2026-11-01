@@ -1,6 +1,6 @@
 # PoC 3b (stages 1 and 2) — replaying infra-controller's spec-drift fix as a Microcks REST conformance test
 
-**Question:** [infra-controller#5459](https://github.com/dsx-ai-factory/infra-controller/issues/5459)
+**Question:** [infra-controller#5459](https://github.com/dsx-ai-factory/infra-controller/pull/5459)
 fixed 14 places where `rest-api/openapi/spec.yaml` disagreed with what the
 REST API actually serves, found by a manual field-by-field audit. Would
 Microcks' OpenAPI test runner have caught one of them automatically?
@@ -8,7 +8,7 @@ Microcks' OpenAPI test runner have caught one of them automatically?
 **Answer (stage 1, stub backend):** yes, for the one drift replayed here. One
 of the 14 defects: `SkuComponents.tpm` was documented as an **array** while
 the server returns a single **object**. Against the spec from before the fix,
-Microcks fails the test; against the spec from the #5459 merge commit, which documents a single object or null, it passes. Same
+Microcks fails the test; against the spec from the dsx-ai-factory/infra-controller#5459 merge commit, which documents a single object or null, it passes. Same
 traffic, same runner, no custom validation code in the runner's path.
 
 ## Stage 2 — the same runner against a real `rest-api`
@@ -36,7 +36,7 @@ What stage 2 does **not** show: the database is empty, so every list is `[]`
 and no payload shape (such as `SkuComponents.tpm`) is checked. That needs
 registered sites and Core data (the official `make kind-reset` route). So
 stage 2 proves the real server's envelope conforms and that the harness works
-against it; it does not replay a #5459 drift on the real server.
+against it; it does not replay a dsx-ai-factory/infra-controller#5459 drift on the real server.
 
 Harness choices worth knowing (all in `run_stage2.py`): the spec is imported
 whole and unmodified apart from `info.title`/`info.version` (so this run does
@@ -63,7 +63,7 @@ Nothing in `infra-controller` is modified or vendored.
 ## What it does
 
 1. Reads `rest-api/openapi/spec.yaml` at two pinned commits on `main`: `2be14c92a`
-   (pre-fix, the parent of the #5459 merge) and `d7f4bf933` (post-fix, the #5459
+   (pre-fix, the parent of the dsx-ai-factory/infra-controller#5459 merge) and `d7f4bf933` (post-fix, the dsx-ai-factory/infra-controller#5459
    merge commit). Both are read with `git show`. The merge commit changes more
    than the `tpm` property; this replay checks the one operation that exposes
    the `tpm` drift.
@@ -73,7 +73,7 @@ Nothing in `infra-controller` is modified or vendored.
    come from an APIExamples secondary artifact, not from spec edits.
 3. Starts a stub HTTP backend on the host that answers that one request with
    the documented example, except that `components.tpm` is a **single object**,
-   which is what #5459 says the server really emits.
+   which is what dsx-ai-factory/infra-controller#5459 says the server really emits.
 4. Runs a Microcks test (`runnerType: OPEN_API_SCHEMA`) against the stub for
    each spec revision and reads the verdict back.
 5. Cross-checks both verdicts with an independent offline `jsonschema`
@@ -81,7 +81,7 @@ Nothing in `infra-controller` is modified or vendored.
 
 ## Results
 
-Microcks `nightly-native` (digest-pinned), `infra-controller` `2be14c92a` (pre) / `d7f4bf933` (post, the #5459 merge commit), run from a fresh blobless clone.
+Microcks `nightly-native` (digest-pinned), `infra-controller` `2be14c92a` (pre) / `d7f4bf933` (post, the dsx-ai-factory/infra-controller#5459 merge commit), run from a fresh blobless clone.
 Full output: [`poc3b/evidence/run.log`](../poc3b/evidence/run.log); structured
 data: [`poc3b/evidence/results.json`](../poc3b/evidence/results.json).
 

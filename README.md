@@ -117,7 +117,7 @@ Microcks half as a test runner:
 | **PoC 1** | `bms.yaml`/`nico.yaml` → Microcks → live MQTT traffic | [`docs/poc1-dsx-exchange-mqtt.md`](docs/poc1-dsx-exchange-mqtt.md) |
 | **PoC 2** | `spec.yaml` → Microcks → reShapr → MCP tool call | [`docs/poc2-infra-controller-mcp.md`](docs/poc2-infra-controller-mcp.md) |
 | **PoC 3a** | `nico.yaml` (before/after #117) → Microcks test runner → live MQTT traffic → pass/fail | [`docs/poc3a-nico-drift-conformance.md`](docs/poc3a-nico-drift-conformance.md) |
-| **PoC 3b** | `spec.yaml` (before/after #5459 fix) → Microcks OpenAPI test runner → stub backend (stage 1) or a real local `rest-api` (stage 2) → pass/fail | [`docs/poc3b-infra-controller-rest-conformance.md`](docs/poc3b-infra-controller-rest-conformance.md) |
+| **PoC 3b** | `spec.yaml` (before/after dsx-ai-factory/infra-controller#5459 fix) → Microcks OpenAPI test runner → stub backend (stage 1) or a real local `rest-api` (stage 2) → pass/fail | [`docs/poc3b-infra-controller-rest-conformance.md`](docs/poc3b-infra-controller-rest-conformance.md) |
 
 ## Results at a glance
 
@@ -126,7 +126,7 @@ Microcks half as a test runner:
 | **4 / 4** | PoCs verified end-to-end locally (Microcks 1.16 native nightly pinned by digest, reShapr 1.1.0); PoC 3b stage 1 uses a stub backend, stage 2 a real local `rest-api` |
 | **45 / 49** | NICo-serialized messages (real `ManagedHostState` serde output, not schema-derived) that conform to today's `nico.yaml`; the 4 that don't are states missing from the spec |
 | **12 / 26** | NICo messages rejected by the pre-#117 `nico.yaml` in PoC 3a (0 rejected after #117) |
-| **1 / 1** | real `infra-controller` spec drift (#5459, `tpm` array vs object) caught by the OpenAPI test runner in PoC 3b, using the real pre- and post-merge commits of #5459 |
+| **1 / 1** | real `infra-controller` spec drift (dsx-ai-factory/infra-controller#5459, `tpm` array vs object) caught by the OpenAPI test runner in PoC 3b, using the real pre- and post-merge commits of dsx-ai-factory/infra-controller#5459 |
 | **37 / 37** | `rest-api` collection endpoints (empty database) that pass Microcks' OpenAPI test against the real server in PoC 3b stage 2; a deliberately drifted spec fails on exactly 1 |
 | **265** | MCP tools generated from `infra-controller`'s real OpenAPI spec (165 paths, 265 operations at `5207e5a67`, 2026-10-29; it was 164 / 263 on 2026-10-20) in PoC 2 |
 | **3** | spec gaps found in `dsx-exchange`, each closable with a few lines |
