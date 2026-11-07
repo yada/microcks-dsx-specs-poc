@@ -276,7 +276,7 @@ Measured on one Apple Silicon machine, after running the PoCs (single samples):
 
 | | Native (default) | JVM 1.15.0 |
 |---|---|---|
-| Memory, app + minion | 151 MiB + 92 MiB | 362 MiB + 201 MiB |
+| Memory, app + minion | 173 MiB + 105 MiB | 362 MiB + 201 MiB |
 | Stack reachable after `up -d` | ~1 s | ~6 s |
 
 The native image has no `curl` or shell, so the compose file has no container
