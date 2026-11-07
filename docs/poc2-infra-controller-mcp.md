@@ -10,9 +10,9 @@ a callable MCP tool, the way an AI agent would consume it.
 | Component | Version |
 |---|---|
 | Microcks (uber) | `quay.io/microcks/microcks-uber:1.16.0-rc1-native`, pinned by digest (same stack as PoC 1) |
-| reShapr control plane | `registry.reshapr.io/reshapr/reshapr-ctrl:1.1.0` |
-| reShapr gateway/proxy | `registry.reshapr.io/reshapr/reshapr-proxy:1.1.0` |
-| reShapr CLI | `@reshapr/reshapr-cli@1.1.0` |
+| reShapr control plane | `registry.reshapr.io/reshapr/reshapr-ctrl:1.1.1` |
+| reShapr gateway/proxy | `registry.reshapr.io/reshapr/reshapr-proxy:1.1.1` |
+| reShapr CLI | `@reshapr/reshapr-cli@1.1.1` |
 | reShapr database | PostgreSQL 17, fresh/empty |
 
 Spec tested: `infra-controller` commit `02b92f18f` (2026-10-17).
@@ -33,7 +33,7 @@ hurt to leave running.
 
 ```sh
 docker compose -f reshapr/docker-compose.yml up -d
-npm install -g @reshapr/reshapr-cli@1.1.0
+npm install -g @reshapr/reshapr-cli@1.1.1
 ```
 
 **Wait until the gateway reports `healthy`** (`docker ps`, roughly 30 seconds)

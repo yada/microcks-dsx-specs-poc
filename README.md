@@ -123,7 +123,7 @@ Microcks half as a test runner:
 
 | | |
 |---|---|
-| **4 / 4** | PoCs verified end-to-end locally (Microcks 1.16.0-rc1 native pinned by digest, reShapr 1.1.0); PoC 3b stage 1 uses a stub backend, stage 2 a real local `rest-api` |
+| **4 / 4** | PoCs verified end-to-end locally (Microcks 1.16.0-rc1 native pinned by digest, reShapr 1.1.1); PoC 3b stage 1 uses a stub backend, stage 2 a real local `rest-api` |
 | **45 / 49** | NICo-serialized messages (real `ManagedHostState` serde output, not schema-derived) that conform to today's `nico.yaml`; the 4 that don't are states missing from the spec |
 | **12 / 26** | NICo messages rejected by the pre-#117 `nico.yaml` in PoC 3a (0 rejected after #117) |
 | **1 / 1** | real `infra-controller` spec drift (dsx-ai-factory/infra-controller#5459, `tpm` array vs object) caught by the OpenAPI test runner in PoC 3b, using the real pre- and post-merge commits of dsx-ai-factory/infra-controller#5459 |
@@ -194,7 +194,7 @@ microcks/
     config/                            — Microcks app + async-minion config
     keycloak-realm/                    — realm import for local auth
 reshapr/
-  docker-compose.yml                   — reShapr 1.1.0 stack (PoC 2)
+  docker-compose.yml                   — reShapr 1.1.1 stack (PoC 2)
 patches/
   bms.yaml.patch.md                    — dsx-exchange bms.yaml: MQTT binding edit
   nico.yaml.patch.md                   — dsx-exchange nico.yaml: MQTT binding edit
@@ -294,8 +294,8 @@ docker compose -f microcks/docker-compose.yml -f microcks/docker-compose.jvm.yml
 | Microcks `microcks-uber` + `microcks-uber-async-minion` (default) | `1.16.0-rc1-native` @ `sha256:eb61d6a1…` (uber) / `sha256:38920eb6…` (minion); pin 1.16.0 when released |
 | Microcks JVM override (`microcks/docker-compose.jvm.yml`) | `1.15.0` |
 | Microcks full stack images (optional, `microcks/full`) | `1.15.0` |
-| reShapr (control plane + gateway) | `1.1.0` |
-| reShapr CLI | `@reshapr/reshapr-cli@1.1.0` |
+| reShapr (control plane + gateway) | `1.1.1` |
+| reShapr CLI | `@reshapr/reshapr-cli@1.1.1` |
 | `dsx-exchange` specs | commit `484162a` (2026-10-15) |
 | `infra-controller` spec | commit `02b92f18f` (2026-10-17) |
 | Platform | Apple Silicon (arm64), Docker 29.8.2; amd64 not tested |
