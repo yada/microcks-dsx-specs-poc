@@ -34,7 +34,7 @@ def collection_paths(spec):
 
 
 def prepare(spec, version):
-    """The spec is used as-is (all 164 paths); only title/version change, so this run
+    """The spec is used as-is (all 166 paths); only title/version change, so this run
     does not collide with other imports of the same spec in a shared Microcks."""
     spec = copy.deepcopy(spec)
     spec["info"]["title"] = TITLE

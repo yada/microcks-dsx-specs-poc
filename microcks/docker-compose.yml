@@ -1,11 +1,11 @@
 name: microcks-poc
 # Default PoC stack: Microcks "uber" distribution (all-in-one, embedded MongoDB-compatible
 # store, authentication disabled) + its async minion + an MQTT broker.
-# Native images (fast start, small footprint), pinned by digest to a 1.16 nightly build that
-# contains the fixes for microcks/microcks#2374 (gRPC) and #2375 (MQTT tests), which 1.15.0-native
-# lacks. This is a stopgap: pin 1.16.0 here once it is released. Nightly digests do get
-# garbage-collected (the 2026-10-20 ones were gone after 9 days), so if the pull fails,
-# repin to the current `nightly-native` index digest or use the JVM override below.
+# Native images (fast start, small footprint), pinned by digest to the 1.16.0-rc1 release
+# candidate, which contains the fixes for microcks/microcks#2374 (gRPC) and #2375 (MQTT tests)
+# that 1.15.0-native lacks. Release tags are expected to be retained, unlike nightly digests
+# (the nightly pins of 2026-10-20 and 2026-10-22 both disappeared within 9-16 days).
+# This is an interim pin: use 1.16.0 here once it is released.
 # The native image has no curl/sh, so there is no container healthcheck; the PoC scripts
 # wait for http://localhost:8080/api/keycloak/config themselves.
 # For the released JVM images (1.15.0) add: -f microcks/docker-compose.jvm.yml
@@ -21,7 +21,7 @@ services:
       - "./mosquitto.conf:/mosquitto/config/mosquitto.conf"
 
   app:
-    image: quay.io/microcks/microcks-uber:nightly-native@sha256:84133a6b6eef265fa8a8f877405794c12d8fa4d6788384a35be96361e46aec06
+    image: quay.io/microcks/microcks-uber:1.16.0-rc1-native@sha256:eb61d6a1068ce59c7ee128ea5ad365419fbda88ffb28daff359afe7e92d9c3cb
     container_name: microcks-poc-app
     ports:
       - "8080:8080"
@@ -31,7 +31,7 @@ services:
       - ASYNC_MINION_URL=http://async-minion:8081
 
   async-minion:
-    image: quay.io/microcks/microcks-uber-async-minion:nightly-native@sha256:097aa478ce6106e8e13cea8d67c3819d3d14e01baea4ca1fde92f5a29d88b0e3
+    image: quay.io/microcks/microcks-uber-async-minion:1.16.0-rc1-native@sha256:38920eb6b09b1fe74cf11510b4a27f435563bb26f9184b3d72aa1091954952e0
     container_name: microcks-poc-async-minion
     restart: on-failure
     depends_on:

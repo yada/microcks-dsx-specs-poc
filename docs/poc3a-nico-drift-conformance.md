@@ -45,7 +45,7 @@ modified or vendored.
 
 ## Results
 
-Microcks `nightly-native` (digest-pinned, see the README), `dsx-exchange` `16867bd` (pre) / `4e8b71f` (post). Full output:
+Microcks `1.16.0-rc1-native` (digest-pinned, see the README), `dsx-exchange` `16867bd` (pre) / `4e8b71f` (post). Full output:
 [`poc3a/evidence/run.log`](../poc3a/evidence/run.log); per-message data:
 [`poc3a/evidence/results.json`](../poc3a/evidence/results.json).
 

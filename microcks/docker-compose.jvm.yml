@@ -1,5 +1,5 @@
 # Optional override: run the released JVM images (Microcks 1.15.0) instead of the
-# default native 1.16 nightly. Slower to start and heavier, but a released version.
+# default native 1.16.0-rc1. Slower to start and heavier, but a final release.
 #   docker compose -f microcks/docker-compose.yml -f microcks/docker-compose.jvm.yml up -d --wait
 services:
   app:

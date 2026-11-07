@@ -1,6 +1,6 @@
 {
-  "infra_controller_commit": "5207e5a67",
-  "endpoints_tested": 37,
+  "infra_controller_commit": "b91bc5c7a",
+  "endpoints_tested": 38,
   "endpoints_skipped": {
     "/v2/org/{org}/nico/tenant/current/routing-profile": 400,
     "/v2/org/{org}/nico/measured-boot/trusted-machine": 400,

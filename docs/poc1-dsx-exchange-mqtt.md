@@ -9,8 +9,8 @@ maintains (`schemas/asyncapi/bms/bms.yaml`, `schemas/asyncapi/nico/nico.yaml`).
 
 | Component | Version |
 |---|---|
-| Microcks (uber, all-in-one: app + embedded store, auth disabled) | `quay.io/microcks/microcks-uber:nightly-native` (pinned by digest in the compose file) |
-| Microcks async minion (uber) | `quay.io/microcks/microcks-uber-async-minion:nightly-native` (pinned by digest) |
+| Microcks (uber, all-in-one: app + embedded store, auth disabled) | `quay.io/microcks/microcks-uber:1.16.0-rc1-native` (pinned by digest in the compose file) |
+| Microcks async minion (uber) | `quay.io/microcks/microcks-uber-async-minion:1.16.0-rc1-native` (pinned by digest) |
 | MQTT broker | `eclipse-mosquitto:2` |
 
 Specs tested: `dsx-exchange` commit `484162a` (2026-10-15).

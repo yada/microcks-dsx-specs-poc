@@ -1,9 +1,9 @@
 # Notes — `infra-controller/rest-api/openapi/spec.yaml`
 
-This repo does **not** vendor NVIDIA's `spec.yaml` (1.3 MB, 165 paths). The
+This repo does **not** vendor NVIDIA's `spec.yaml` (1.3 MB, 166 paths). The
 file already has a response example on every schema and imports into Microcks
 **unmodified**. Verified against `infra-controller` commits `02b92f18f`,
-`ee29e315f` and `5207e5a67`.
+`ee29e315f`, `5207e5a67` and `b91bc5c7a`.
 
 ## No edit needed: use the APIExamples file
 
@@ -31,7 +31,7 @@ This replaces two edits this repo used to describe:
    `401`) was deterministic too, on 1.15.0 and on a 1.16 nightly.
 
 If you would rather change the spec, adding `examples: {example-1: {value: test-org-1}}`
-to the `org` parameter (declared at path-item level, as for all 164 paths)
+to the `org` parameter (declared at path-item level, as for all 166 paths)
 works too, but then the shared `401` must use a different example name.
 
 > **Note on path-item-level `parameters:`:** this spec declares path

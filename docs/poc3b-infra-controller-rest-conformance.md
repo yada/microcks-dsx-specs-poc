@@ -22,12 +22,12 @@ custom JWT issuer; no Kind, no Core, no registered site) and points Microcks'
 poc3b/stage2.sh         # up + test + down, a few minutes; needs Docker, Go, the Microcks stack
 ```
 
-Result, `infra-controller` at `5207e5a67` (log: `poc3b/evidence/stage2.log`):
+Result, `infra-controller` at `b91bc5c7a` (log: `poc3b/evidence/stage2.log`):
 
-- 57 collection `GET` endpoints have only the `org` path parameter. 37 answer
+- 58 collection `GET` endpoints have only the `org` path parameter. 38 answer
   `200` on the real server with an empty database; 20 answer `400`/`403`
   (required query parameters or a role this token does not have) and are skipped.
-- Microcks passes **37 of 37** (status, content type, response schema).
+- Microcks passes **38 of 38** (status, content type, response schema).
 - Without a token the server answers `401`, so the token really is exercised.
 - **Negative control:** with `Metadata.version` deliberately documented as an
   integer, Microcks fails exactly `GET /metadata` and nothing else.
@@ -43,7 +43,7 @@ whole and unmodified apart from `info.title`/`info.version` (so this run does
 not collide with other imports of the same spec), and the requests come from a
 generated [APIExamples](https://microcks.io/documentation/references/examples/)
 secondary artifact (`org: test-org-1` per operation, placeholder response
-body) with `filteredOperations` selecting the 37 endpoints. The verdict comes
+body) with `filteredOperations` selecting the 38 endpoints. The verdict comes
 from validating the live response, not from the placeholder. An earlier
 version of this script edited the spec instead (dropped query params, renamed
 response examples, removed `401`s); APIExamples made all of that unnecessary.
@@ -81,7 +81,7 @@ Nothing in `infra-controller` is modified or vendored.
 
 ## Results
 
-Microcks `nightly-native` (digest-pinned), `infra-controller` `2be14c92a` (pre) / `d7f4bf933` (post, the dsx-ai-factory/infra-controller#5459 merge commit), run from a fresh blobless clone.
+Microcks `1.16.0-rc1-native` (digest-pinned), `infra-controller` `2be14c92a` (pre) / `d7f4bf933` (post, the dsx-ai-factory/infra-controller#5459 merge commit), run from a fresh blobless clone.
 Full output: [`poc3b/evidence/run.log`](../poc3b/evidence/run.log); structured
 data: [`poc3b/evidence/results.json`](../poc3b/evidence/results.json).
 
@@ -105,7 +105,7 @@ offline check is what pins it to `components/tpm`.
   as `VpcStatus.Configuring`, the unquoted `On` enum value, the shared
   `MachineHealthIssue` schema) are not replayed.
 - **Hand-reduced spec.** Only the SKU operation is kept, and its non-200
-  responses are dropped, to keep the test focused. The full 164-path spec
+  responses are dropped, to keep the test focused. The full 166-path spec
   imports as well (PoC 2), but its examples would also need a backend that
   serves each one.
-- **CI.** `.github/workflows/poc-conformance.yml` runs stage 1 and stage 2 on GitHub (`ubuntu-26.04`, infra-controller pinned to `5207e5a67`). On Linux the API is reached through the compose network's gateway instead of `host.docker.internal`.
+- **CI.** `.github/workflows/poc-conformance.yml` runs stage 1 and stage 2 on GitHub (`ubuntu-26.04`, infra-controller pinned to `b91bc5c7a`). On Linux the API is reached through the compose network's gateway instead of `host.docker.internal`.

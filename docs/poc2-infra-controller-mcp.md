@@ -9,7 +9,7 @@ a callable MCP tool, the way an AI agent would consume it.
 
 | Component | Version |
 |---|---|
-| Microcks (uber) | `quay.io/microcks/microcks-uber:nightly-native`, pinned by digest (same stack as PoC 1) |
+| Microcks (uber) | `quay.io/microcks/microcks-uber:1.16.0-rc1-native`, pinned by digest (same stack as PoC 1) |
 | reShapr control plane | `registry.reshapr.io/reshapr/reshapr-ctrl:1.1.0` |
 | reShapr gateway/proxy | `registry.reshapr.io/reshapr/reshapr-proxy:1.1.0` |
 | reShapr CLI | `@reshapr/reshapr-cli@1.1.0` |
@@ -141,11 +141,11 @@ gateway and handed back in MCP's own response envelope.
 
 ## What this proves
 
-- Microcks mocks infra-controller's real OpenAPI spec (165 paths, 265
-  operations at `5207e5a67`, 2026-10-29; the counts follow upstream, they were
-  164 / 263 on 2026-10-20) with no edit to the spec; one APIExamples file provides the
+- Microcks mocks infra-controller's real OpenAPI spec (166 paths, 267
+  operations at `b91bc5c7a`, 2026-11-06; the counts follow upstream, they were
+  165 / 265 on 2026-10-29 and 164 / 263 on 2026-10-20) with no edit to the spec; one APIExamples file provides the
   `org` request example ([notes](../patches/infra-controller-spec.yaml.patch.md)).
-- reShapr turns the spec into 265 MCP tools. The one endpoint with an APIExamples entry
+- reShapr turns the spec into 267 MCP tools. The one endpoint with an APIExamples entry
   (`get_v2_org_org_nico_metadata`) is backed by a real mock and callable — the full chain
   **spec → Microcks mock → reShapr MCP tool → MCP client call** works
   end-to-end against infra-controller's actual API shape.
